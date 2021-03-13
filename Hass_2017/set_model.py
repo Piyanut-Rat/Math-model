@@ -240,6 +240,7 @@ class DifferentialEquation(object):
 
 def param_values():
     x = [0]*C.NUM
+    # 1-82
     x[C.AKT_activation_pEGFR] = -5.0000     #1.00*10**(−05) 
     x[C.AKT_activation_pErbB12] = -1.19400  #6.40*10**(−02) 
     x[C.AKT_activation_pErbB13] =  1.1178   #1.31*10**(+01)
@@ -262,7 +263,68 @@ def param_values():
     x[C.EGFR_basal_recycle] = +5.7152       #5.19*10**(+05)
     x[C.EGFR_dimerize] = -1.2005            #6.30*10**(−02)
     x[C.EGFR_lig_binding] = -4.7227         #1.89*10**(−05)
-    x[C.EGF_kD] =+0.0000                    #1.00*10**(+00)
+    x[C.EGF_kD] = +0.0000                    #1.00*10**(+00)
+    x[C.ERK_phosphorylation_pMEK] = -3.5879 #2.58*10**(−04)
+    x[C.ErbB2_ErbB3_dimerize] =  -1.5192    #3.03*10**(−02)
+    x[C.ErbB2_dimerize] = -2.1680           #6.79*10**(−03)
+    x[C.ErbB2_recycle] = -2.1824            #6.57*10**(−03)
+    x[C.ErbB3_ErbB2_basal_act] = -5.0000    #1.00*10**(−05)
+    x[C.ErbB3_basal_activation] = -1.5331   #2.93*10**(−02)
+    x[C.ErbB3_basal_recycle] = -0.1327      #7.37*10**(−01)
+    x[C.ErbB3_dimerize] = -1.3508           #4.46*10**(−02)
+    x[C.ErbB3_lig_binding] = -4.2430        #5.71*10**(−05)
+    x[C.HGF_kD] = -0.5229                   #3.00*10**(−01)
+    x[C.HRG_kD] = -1.3010                   #5.00*10**(−02)
+    x[C.IGF1R_basal_activation] = -2.9317   #1.17*10**(−03)
+    x[C.IGF1R_basal_recycle] = +3.0000      #1.00*10**(+03)
+    x[C.IGF1R_dimerize] = +1.2337           #1.71*10**(+01)
+    x[C.IGF1R_lig_binding] = -2.8155        #1.53*10**(−03)
+    x[C.IGF1_kD] = -0.5229                  #3.00*10**(−01)
+    x[C.MEK_internIGF1R_effect] = -5.0000   #1.00*10**(−05)
+    x[C.MEK_phosphorylation_pEGFR] = -5.0000    #1.00*10**(−05)
+    x[C.MEK_phosphorylation_pErbB12] = -0.5625  #2.74*10**(−01)
+    x[C.MEK_phosphorylation_pErbB13] = -5.0000  #1.00*10**(−05)
+    x[C.MEK_phosphorylation_pErbB32] = -1.2178  #6.06*10**(−02)
+    x[C.MEK_phosphorylation_pIGF1R] = -1.5236   #2.99*10**(−02)
+    x[C.MEK_phosphorylation_pMetEGFR] = -5.0000 #1.00*10**(−05)
+    x[C.MEK_phosphorylation_pMetErbB3] = -1.4164#3.83*10**(−02)
+    x[C.MEK_phosphorylation_pMetd] = +0.2741    #1.88*10**(+00)
+    x[C.Met_EGFR_BTC_dimerize] = -1.9539        #1.11*10**(−02)
+    x[C.Met_EGFR_basal_act] = -4.7581           #1.75*10**(−05)
+    x[C.Met_EGFR_dimerize] = -3.2898            #5.13*10**(−04)
+    x[C.Met_ErbB3_basal_act] = +0.5177      #3.29*10**(+00)
+    x[C.Met_ErbB3_dimerize] = -1.4308       #3.71*10**(−02)
+    x[C.Met_basal_act] = -5.0000            #1.00*10**(−05)
+    x[C.Met_dimerize] = -2.0378             #9.17*10**(−03)
+    x[C.Met_lig_ErbB3_dimerize] = +2.7536   #5.67*10**(+02)
+    x[C.Met_lig_binding] = -2.3452          #4.52*10**(−03)
+    x[C.Met_recycle] = -0.2656              #5.42*10**(−01)
+    x[C.S6K1_phosphorylation_pAKT] = -0.6024 #2.50*10**(−01)
+    x[C.S6K1_phosphorylation_pERK] = -4.9718 #1.07*10**(−05)
+    x[C.S6_phosphorylation_pERK] = -4.9987  #1.00*10**(−05)
+    x[C.S6_phosphorylation_pS6K1] = -2.0671 #8.57*10**(−03)
+    x[C.feedback_pAKT] = -4.9754            #1.06*10**(−05)
+    x[C.feedback_pERK] = +3.0000            #1.00*10**(+03)
+    x[C.feedback_pERK_on_AKT] = -4.9989     #1.00*10**(−05)
+    x[C.feedback_pS6K1] = -4.6796           #2.09*10**(−05)
+    x[C.init_AKT] = +0.4327                 #2.71*10**(+00)
+    x[C.init_EGFR] = +1.2519                #1.79*10**(+01)
+    x[C.init_EGFR_BTC] = +0.0000            #0.00*10**(+00)
+    x[C.init_EGFR_EGF] = +0.0000            #0.00*10**(+00)
+    x[C.init_ErbB2] = +0.7560               #5.70*10**(+00)
+    x[C.init_ErbB3] = +0.3944               #2.48*10**(+00)
+    x[C.init_ErbB3_HRG] = +0.0000           #0.00*10**(+00)
+    x[C.init_IGF1R] = +0.6753               #4.73*10**(+00)
+    x[C.init_IGF1R_IGF1] = +0.0000          #0.00*10**(+00)
+    x[C.init_MEK] = +0.6275                 #4.24*10**(+00)
+    x[C.init_Met] = +0.8978                 #7.90*10**(+00)
+    x[C.init_Met_HGF] = +0.0000             #0.00*10**(+00)
+    x[C.init_RTKph] = -0.2084               #6.19*10**(−01)
+    x[C.init_S6] = +2.1629                  #1.46*10**(+02)
+    x[C.init_pERK] = -0.4759                #3.34*10**(−01)
+    x[C.init_pS6K1] = -2.9054               #1.24*10**(−03)
+
+    #251-326
 
     return x
 
@@ -271,7 +333,7 @@ def initial_values():
     y0 = [0]*V.NUM
 
     return y0
-'''
+''''
 # call class
 if __name__ == '__main__':
     D = DifferentialEquation(3) #create new instance
