@@ -113,6 +113,10 @@ NAMES = [
     'S6_phosphorylation_pERK',
     'pS6_dephosphorylation',
 
+
+    'feedback_pAKT',
+    
+
 ]
 
 for idx, name in enumerate(NAMES):
