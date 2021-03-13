@@ -137,18 +137,140 @@ class DifferentialEquation(object):
 
         ##DOWNSTREAM
         ###ERK branch
-        v[86] = 
+        v[86] = (y[V.MEK]* x[C.MEK_phosphorylation_pEGFR]* y[V.pEGFRd])/(1+x[C.feedback_pAKT]* x[C.init_pAKT]+x[C.feedback_pERK]* y[V.pERK])
+        v[87] = (y[V.MEK]* x[C.MEK_phosphorylation_pErbB12]* y[V.pErbB12])/(1+x[C.feedback_pAKT]* x[C.init_pAKT]+x[C.feedback_pERK]* y[V.pERK])
+        v[88] = (y[V.MEK]* x[C.MEK_phosphorylation_pErbB13]* y[V.pErbB13])/(1+x[C.feedback_pAKT]* x[C.init_pAKT]+x[C.feedback_pERK]* y[V.pERK])
+        v[89] = (y[V.MEK]* x[C.MEK_phosphorylation_pErbB32]* y[V.pErbB32])/(1+x[C.feedback_pAKT]* x[C.init_pAKT]+x[C.feedback_pERK]* y[V.pERK])
+        v[90] = (y[V.MEK]* x[C.MEK_phosphorylation_pMetd]* y[V.pMetd])/(1+x[C.feedback_pAKT]* x[C.init_pAKT]+x[C.feedback_pERK]* y[V.pERK])
+        v[91] = (y[V.MEK]* x[C.MEK_phosphorylation_pMetEGFR]* y[V.pMetEGFR])/(1+x[C.feedback_pAKT]* x[C.init_pAKT]+x[C.feedback_pERK]* y[V.pERK])
+        v[92] = (y[V.MEK]* x[C.MEK_phosphorylation_pIGF1R]* y[V.pIGF1Rd])/(1+x[C.feedback_pAKT]* x[C.init_pAKT]+x[C.feedback_pERK]* y[V.pERK])
+        v[93] = (y[V.MEK]* x[C.MEK_phosphorylation_pMetErbB3]* y[V.pMetErbB3])/(1+x[C.feedback_pAKT]* x[C.init_pAKT]+x[C.feedback_pERK]* y[V.pERK])
+        v[94] = (y[V.MEK]* x[C.MEK_internIGF1R_effect]* x[C.MEK_phosphorylation_pIGF1R]* y[V.pIGF1Ri])/(1+x[C.feedback_pAKT]* x[C.init_pAKT]+x[C.feedback_pERK]* y[V.pERK])
+        v[95] = y[V.pMEK]* x[C.pMEK_dephosphorylation]
+
+        v[96] = y[V.ERK]* x[C.ERK_phosphorylation_pMEK]* y[V.pMEK]
+        v[97] = y[V.pERK]* x[C.pERK_dephosphorylation]
         
+        ###AKT branch
+        v[98] = (y[V.AKT]* x[C.AKT_activation_pEGFR]* y[V.pEGFRd])/(x[C.feedback_pERK_on_AKT]* y[V.pERK] + x[C.feedback_pS6K1]* y[V.pS6K1] + 1)
+        v[99] = (y[V.AKT]* x[C.AKT_activation_pErbB12]* y[V.pErbB12])/(x[C.feedback_pERK_on_AKT]* y[V.pERK] + x[C.feedback_pS6K1]* y[V.pS6K1] + 1)
+        v[100] = (y[V.AKT]* x[C.AKT_activation_pErbB13]* y[V.pErbB13])/(x[C.feedback_pERK_on_AKT]* y[V.pERK] + x[C.feedback_pS6K1]* y[V.pS6K1] + 1)
+        v[101] = (y[V.AKT]* x[C.AKT_activation_pErbB32]* y[V.pErbB32])/(x[C.feedback_pERK_on_AKT]* y[V.pERK] + x[C.feedback_pS6K1]* y[V.pS6K1] + 1)
+        v[102] = (y[V.AKT]* x[C.AKT_activation_pMetEGFR]* y[V.pMetEGFR])/(x[C.feedback_pERK_on_AKT]* y[V.pERK] + x[C.feedback_pS6K1]* y[V.pS6K1] + 1)
+        v[103] = (y[V.AKT]* x[C.AKT_activation_pMetd]* y[V.pMetd])/(x[C.feedback_pERK_on_AKT]* y[V.pERK] + x[C.feedback_pS6K1]* y[V.pS6K1] + 1)
+        v[104] = (y[V.AKT]* x[C.AKT_activation_pIGF1R]* y[V.pIGF1Rd])/(x[C.feedback_pERK_on_AKT]* y[V.pERK] + x[C.feedback_pS6K1]* y[V.pS6K1] + 1)
+        v[105] = (y[V.AKT]* x[C.AKT_activation_pMetErbB3]* y[V.pMetErbB3])/(x[C.feedback_pERK_on_AKT]* y[V.pERK] + x[C.feedback_pS6K1]* y[V.pS6K1] + 1)
+        v[106] = (y[V.AKT]* x[C.AKT_activation_pIGF1R]* x[C.AKT_internIGF1R_effect]* y[V.pIGF1Ri])/(x[C.feedback_pERK_on_AKT]* y[V.pERK] + x[C.feedback_pS6K1]* y[V.pS6K1] + 1)
+        v[107] = y[V.pAKT]* x[C.pAKT_deactivation]
+
+        ###GSK3-S6K-S6 
+        v[108] = y[V.S6K1]* x[C.S6K1_phosphorylation_pAKT]* y[V.pAKT]
+        v[109] = y[V.S6K1]* x[C.S6K1_phosphorylation_pERK]* y[V.pERK]
+        v[110] = y[V.pS6K1]* x[C.pS6K1_dephosphorylation]
+
+        v[111] = y[V.S6]* x[C.S6_phosphorylation_pS6K1]* y[V.pS6K1]
+        v[112] = y[V.S6]* x[C.S6_phosphorylation_pERK]* y[V.pERK]
+        v[113] = y[V.pS6]* x[C.pS6_dephosphorylation]
+
+        #ODE of the law of the mass action
+        dydt = [0]* V.NUM
+        dydt[V.dose_EGF] = -v[6] + v[7]
+        dydt[V.dose_HGF] = -v[14] + v[15]
+        dydt[V.RTKph] = -v[43] + v[44] - v[47] + v[48] - v[53] + v[54] - v[58] + v[59] - v[63] + v[64] - v[67] + v[68] - v[71] + v[72] - v[75] + v[76] - v[80] + v[81] - v[84] + v[85] 
+        dydt[V.dose_IGF1] = - v[12] + v[13]
+        dydt[V.dose_HRG] = -v[10] + v[11]
+        dydt[V.dose_BTC] = -v[8] + v[9]
+        dydt[V.EGFR] = v[1] - v[6] + v[7] - v[8] + v[9] - 2*v[32] - v[35] - v[36] - v[40] + v[45]
+        dydt[V.EGFR_EGF] = v[6] - v[7] - 2*v[16] - v[21] - v[23] - v[30]
+        dydt[V.EGFR_BTC] = v[8] - v[9] - 2*v[17] - v[22] - v[24] - v[25] - v[31]
+        dydt[V.pEGFRd] = v[16] + v[17] + v[32] - v[41]
+        dydt[V.pEGFRi] = v[41] - v[42] - v[43]
+        dydt[V.pEGFRi_ph] = v[43] - v[44]
+        dydt[V.EGFRi] = +2*v[44] - v[45] + v[64] + v[72] + v[85]
+        dydt[V.ErbB2] = v[2] - 2*v[18] - v[21] - v[22] - v[26] - v[35] - v[37] + v[50]
+        dydt[V.pErbB2] = v[18] - v[46]
+        dydt[V.pErbB2i] = v[46] - v[47] - v[49]
+        dydt[V.ErbB2i] = +2*v[48] - v[50] + v[64] + v[68]
+        dydt[V.pErbB2i_ph] = v[47] - v[48]
+        dydt[V.pErbB12] = v[21] + v[22] + v[35] - v[61]
+        dydt[V.pErbB12i] = v[61] - v[62] - v[63]
+        dydt[V.pErbB12i_ph] = v[63] - v[64]
+        dydt[V.ErbB3] = v[3] - v[10] + v[11] - v[25] - 2*v[33] - v[36] - v[37] - v[38] + v[55]
+        dydt[V.ErbB3_HRG] = v[10] - v[11] - 2*v[19] - v[23] - v[24] - v[26] - v[28] - v[29]
+        dydt[V.pErbB3d] = v[19] + v[33] - v[51]
+        dydt[V.pErbB3i] = v[51] - v[52] - v[53]
+        dydt[V.pErbB3i_ph] = v[53] - v[54]
+        dydt[V.ErbB3i] = +2*v[54] - v[55] + v[68] + v[72] + v[81]
+        dydt[V.pErbB13] = v[23] + v[24] + v[25] + v[36] - v[69]
+        dydt[V.pErbB13i] = v[69] - v[70] - v[71]
+        dydt[V.pErbB13i_ph] = v[71] - v[72]
+        dydt[V.pErbB32] = v[26] + v[37] - v[65]
+        dydt[V.pErbB32i] = v[65] - v[66] - v[67]
+        dydt[V.pErbB32i_ph] = v[67] - v[68]
+        dydt[V.IGF1R] = v[4] - v[12] + v[13] -2*v[34] + v[60]
+        dydt[V.IGF1R_IGF1] = v[12] - v[13] -2*v[20]
+        dydt[V.pIGF1Rd] = v[20] + v[34] - v[56]
+        dydt[V.pIGF1Ri] = v[56] - v[57] - v[58]
+        dydt[V.pIGF1Ri_ph] = v[58] - v[59]
+        dydt[V.IGF1Ri] = +2*v[59 ] - v[60]
+        dydt[V.Met] = v[5] - v[14] + v[15] - v[28] - v[38] - 2*v[39] - v[40] + v[77]
+        dydt[V.Met_HGF] = v[14] - v[15] - 2*v[27] - v[29] - v[30] - v[31]
+        dydt[V.pMetd] = v[27] + v[39] - v[73]
+        dydt[V.pMeti] = v[73] - v[74] - v[75]
+        dydt[V.pMeti_ph] = v[75] - v[76]
+        dydt[V.Meti] = +2*v[76] - v[77] + v[81] + v[85]
+        dydt[V.pMetErbB3] = v[28] + v[29] + v[38] - v[78]
+        dydt[V.pMetErbB3i] = v[78] - v[79] - v[80]
+        dydt[V.pMetErbB3i_ph] = v[80] - v[81]
+        dydt[V.pMetEGFR] = v[30] + v[31] + v[40] - v[82]
+        dydt[V.pMetEGFRi] = v[82] - v[83] - v[84]
+        dydt[V.pMetEGFRi_ph] = v[84] - v[85]
+        dydt[V.MEK] = -v[86] - v[87] - v[88] - v[89] - v[90] - v[91] - v[92] - v[93] - v[94] + v[95]
+        dydt[V.pMEK] = v[86] + v[87] + v[88] + v[89] + v[90] + v[91] + v[92] + v[93] + v[94] - v[95]
+        dydt[V.ERK] = -v[96] + v[97]
+        dydt[V.pERK] = v[96] - v[97]
+        dydt[V.AKT] = -v[98] - v[99] - v[100] - v[101] - v[102] - v[103] - v[104] - v[105] - v[106] + v[107]
+        dydt[V.pAKT] = v[98] + v[99] + v[100] + v[101] + v[102] + v[103] + v[104] + v[105] + v[106] - v[107]
+        dydt[V.S6K1] = -v[108] - v[109] + v[110]
+        dydt[V.pS6K1] = v[108] + v[109] - v[110]
+        dydt[V.S6] = -v[111] - v[112] + v[113]
+        dydt[V.pS6] = v[111] + v[112] - v[113]
+
+        return dydt
+
+def param_values():
+    x = [0]*C.NUM
+    x[C.AKT_activation_pEGFR] = -5.0000     #1.00*10**(−05) 
+    x[C.AKT_activation_pErbB12] = -1.19400  #6.40*10**(−02) 
+    x[C.AKT_activation_pErbB13] =  1.1178   #1.31*10**(+01)
+    x[C.AKT_activation_pErbB32] = -0.2513   #5.61*10**(−01)
+    x[C.AKT_activation_pIGF1R] = -0.1641    #6.85*10**(−01)
+    x[C.AKT_activatio_pMetEGFR] = -5.0000   #1.00*10**(−05)
+    x[C.AKT_activation_pMetErbB3] = -1.4321 #3.70*10**(−02)
+    x[C.AKT_activation_pMetd] = -0.0479     #8.96*10**(−01)
+    x[C.AKT_internIGF1R_effect] = -4.9907    #1.02*10**(−05)
+    x[C.EGFR_BTC_binding] = -4.6498          #2.24*10**(−05)
+    x[C.EGFR_BTC_dimerize] = 3.0000          #1.00*10**(+03)
+    x[C.EGFR_ErbB2_BTC_dimerize] = 0.2072   #1.61*10**(+00)
+    x[C.EGFR_ErbB2_basal_act] = -5.0000     #1.00*10**(−05)
+    x[C.EGFR_ErbB2_dimerize] = -1.8041      #1.57*10**(−02)
+    x[C.EGFR_ErbB3_BTC_dimerize] = -1.4539  #3.52*10**(−02)
+    x[C.EGFR_ErbB3_basal_act] = -3.1243     #7.51*10**(−04)
+    x[C.EGFR_ErbB3_dimerize] = -2.9275      #1.18*10**(−03)
+    x[C.EGFR_ErbB3_dimerize_noHRG] = -5.0000 #1.00*10**(−05)
+    x[C.EGFR_basal_activation] = -5.0000    #1.00*10**(−05)
+    x[C.EGFR_basal_recycle] = +5.7152       #5.19*10**(+05)
+    x[C.EGFR_dimerize] = -1.2005            #6.30*10**(−02)
+    x[C.EGFR_lig_binding] = -4.7227         #1.89*10**(−05)
+    x[C.EGF_kD] =+0.0000                    #1.00*10**(+00)
+
+    return x
 
 
+def initial_values():
+    y0 = [0]*V.NUM
 
-
-
-
-
-
-
-
+    return y0
 '''
 # call class
 if __name__ == '__main__':
