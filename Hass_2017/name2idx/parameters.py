@@ -114,8 +114,13 @@ NAMES = [
     'pS6_dephosphorylation',
 
 
-    'feedback_pAKT',
-    
+    'Ligand',
+    'no_ligand',
+    'EGF',
+    'HRG',
+    'IGF1',
+    'HGF',
+    'BTC',
 
 ]
 
