@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.spatial.distance import cosine
 
-from observable import observables, NumercalSimulation
+from observable import observables, NumericalSimulation
 from set_search_param import SearchParam
 
 
@@ -94,3 +94,5 @@ def objective(indiv_gene, *args):
         return np.sum(error)  # < 1e12
     else:
         return 1e12
+
+
