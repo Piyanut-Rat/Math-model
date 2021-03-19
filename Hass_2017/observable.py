@@ -33,7 +33,7 @@ observables = [
     'pS6_au',
 ]
 
-class NumercalSimulation(DifferentialEquation):
+class NumericalSimulation(DifferentialEquation):
     # inheritance : make new class (subclass) from old class(superclass)
     def __init__(self):
         super().__init__(perturbation = {})
