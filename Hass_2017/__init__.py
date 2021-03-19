@@ -1,12 +1,12 @@
 import os
 from typing import List
 
-from fitness import objective
+#from fitness import objective
+import fitness
 from name2idx import parameters as C
 from name2idx import species as V
-
-from observable import  NumercalSimulation, observables
-from reaction_network import ReactionNetwork
+from observable import NumericalSimulation, observables
+#from reaction_network import ReactionNetwork
 from set_model import initial_values, param_values
 from set_search_param import SearchParam
 from viz import Visualization
@@ -29,11 +29,11 @@ class BioMassModel(object):
         self.pval = param_values
         self.ival = initial_values
         self.obj_func = objective
-        self.sim = NumercalSimulation()
+        self.sim = NumericalSimulation()
         #self.exp = ExperimentalData()
         self.viz = Visualization()
         self.sp = SearchParam()
-        self.rxn = ReactionNetwork()
+        #self.rxn = ReactionNetwork()
 
     @property
     def path(self) -> str:
