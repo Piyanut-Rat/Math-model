@@ -1,15 +1,13 @@
 import os
 from typing import List
 
-#from fitness import objective
-import fitness
-from name2idx import parameters as C
-from name2idx import species as V
-from observable import NumericalSimulation, observables
-#from reaction_network import ReactionNetwork
-from set_model import initial_values, param_values
-from set_search_param import SearchParam
-from viz import Visualization
+from .fitness import objective
+from .name2idx import C, V
+from .observable import ExperimentalData, NumericalSimulation, observables
+from .reaction_network import ReactionNetwork
+from .set_model import initial_values, param_values
+from .set_search_param import SearchParam
+from .viz import Visualization
 
 
 def _check_duplicate(names: List[str], object: str) -> List[str]:
@@ -30,10 +28,10 @@ class BioMassModel(object):
         self.ival = initial_values
         self.obj_func = objective
         self.sim = NumericalSimulation()
-        #self.exp = ExperimentalData()
+        self.exp = ExperimentalData()
         self.viz = Visualization()
         self.sp = SearchParam()
-        #self.rxn = ReactionNetwork()
+        self.rxn = ReactionNetwork()
 
     @property
     def path(self) -> str:
