@@ -1,3 +1,6 @@
+import sys
+sys.path.append("Hass_2017")
+
 from biomass import run_simulation
 
 import Hass_2017
