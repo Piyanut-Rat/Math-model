@@ -1,3 +1,6 @@
+import os
+import sys
+
 import numpy as np
 from scipy.spatial.distance import cosine
 
