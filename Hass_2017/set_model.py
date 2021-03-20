@@ -20,7 +20,7 @@ class DifferentialEquation(object):
         v[6] = y[V.EGFR]* x[C.EGFR_lig_binding]* y[V.dose_EGF]
         v[7] = y[V.EGFR_EGF]* x[C.EGFR_lig_binding]* x[C.EGF_kD]
         v[8] = y[V.EGFR]* x[C.EGFR_BTC_binding]* y[V.dose_BTC]
-        v[9] = y[V.EGFR_BTC]* x[C.EGFR_BTC_binding]* x[EGF_kD]
+        v[9] = y[V.EGFR_BTC]* x[C.EGFR_BTC_binding]* x[C.EGF_kD]
 
         v[10] = y[V.ErbB3]* x[C.ErbB3_lig_binding]* y[V.dose_HRG]        
         v[11] = y[V.ErbB3_HRG]* x[C.ErbB3_lig_binding]* x[C.HRG_kD]
@@ -73,7 +73,7 @@ class DifferentialEquation(object):
         ###EGFR homodimers
         v[41] = x[C.pEGFR_internalize]* y[V.pEGFRd]
         v[42] = x[C.pEGFR_degradation]* y[V.pEGFRi]
-        v[43] = y[V.RTKph]* x[C.pEGFR_phosphatase_binding]* y[X.pEGFRi]
+        v[43] = y[V.RTKph]* x[C.pEGFR_phosphatase_binding]* y[V.pEGFRi]
         v[44] = x[C.pEGFRi_dephosph]* y[V.pEGFRi_ph]
         v[45] = x[C.EGFR_basal_recycle]* y[V.EGFRi]
 
