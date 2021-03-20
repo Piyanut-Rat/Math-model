@@ -68,6 +68,11 @@ NAMES = [
     'pS6K1',
     'S6',
     'pS6',
+
+    'EGFR',
+    'EGFR_ErbB3_dimerize_noHRG',
+    'pErbB3i',
+    'pMetEGFRi_ph',
 ]
 for idx, name in enumerate(NAMES):
     exec(
