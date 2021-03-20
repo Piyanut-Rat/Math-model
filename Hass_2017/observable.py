@@ -36,7 +36,7 @@ observables = [
 class NumericalSimulation(DifferentialEquation):
     # inheritance : make new class (subclass) from old class(superclass)
     def __init__(self):
-        super().__init__(perturbation = {})
+        super().__init__(pertubation = {})
         self.normalization = {}
 
     t = range(240) # unit; sec.
@@ -50,7 +50,9 @@ class NumericalSimulation(DifferentialEquation):
             self.pertubation = _perturbation
         #get steady state
         x[C.Ligand] = x[C.no_ligand] # No ligand binding
-        y0 = get_steady_state(self.diffeq(),y0, tuple(x))
+        
+        y0 = get_steady_state(self.diffeq, y0, tuple(x))
+        
         if not y0:
             return False
         # add ligand
@@ -66,7 +68,8 @@ class NumericalSimulation(DifferentialEquation):
             elif condition == 'BTC':
                 x[C.Ligand] = x[C.BTC]
             
-            sol = sol_ode(self.diffeq(), y0, self.t, tuple(x))
+            
+            sol = solve_ode(self.diffeq, y0, self.t, tuple(x))
 
             if sol is None:
                 return False
