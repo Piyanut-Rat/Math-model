@@ -48,7 +48,7 @@ class Visualization(object):
     
     def get_timecourse_options(self):
         for i, _ in enumerate(observables):
-            self.timecourse_options[i]["xlim"] = (-10, 240)
+            self.timecourse_options[i]["xlim"] = (-10, 250)
             self.timecourse_options[i]["xticks"] = [50 * i for i in range(5)]
             self.timecourse_options[i]["xlabel"] = "Time (min)"
 
