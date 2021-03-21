@@ -7,14 +7,14 @@ from name2idx import species as V
 from set_model import DifferentialEquation
 
 observables = [
-    "FACS_EGFR",
-    "FACS_ErbB2",
+    'FACS_EGFR',
+    'FACS_ErbB2',
     'FACS_ErbB3',
     'FACS_IGF1R',
     'FACS_Met',
 
-    'tEGFR_au ',
-    'tErbB2_au ',
+    'tEGFR_au',
+    'tErbB2_au',
     'tErbB3_au',
     'tIGF1R_au',
 
@@ -74,167 +74,69 @@ class NumericalSimulation(DifferentialEquation):
             if sol is None:
                 return False
             else:
-                '''
-                # set some fixed parameters and modeling options (5)
-                offset_tEGFR_Cellline= [-1,1,1,-5,5]
-                scale_tEGFR_Cellline = [-1, 1, 1, -4, 6]
+                self.simulations[observables.index('FACS_EGFR'), :, i] = sol.y[V.EGFR, :] + sol.y[V.EGFR_EGF, :] + sol.y[V.EGFR_BTC, :] + 2*sol.y[V.EGFR_BTC, :] + sol.y[V.pErbB12, :] + sol.y[V.pErbB13, :] + sol.y[V.pMetEGFR, :]
+                
+                self.simulations[observables.index('FACS_ErbB2'), :, i] = sol.y[V.ErbB2, :] + 2*sol.y[V.pErbB2, :] + sol.y[V.pErbB12, :] + sol.y[V.pErbB32, :]
+                
+                self.simulations[observables.index('FACS_ErbB3'), :, i] = sol.y[V.ErbB3, :] + sol.y[V.ErbB3_HRG, :] + 2*sol.y[V.pErbB3d, :] + sol.y[V.pErbB32, :] + sol.y[V.pErbB13, :] + sol.y[V.pMetErbB3]
+                
+                self.simulations[observables.index('FACS_IGF1R'), :, i] = sol.y[V.IGF1R, :] + sol.y[V.IGF1R_IGF1, :] + 2*sol.y[V.pIGF1Rd, :]
+                
+                self.simulations[observables.index('FACS_Met'), :, i] = sol.y[V.Met, :] + 2*sol.y[V.pMetd, :] + sol.y[V.pMetEGFR, :] + sol.y[V.pMetErbB3, :]
+                
 
-                offset_tErbB2_Cellline= [-1,1,1,-5,5]
-                scale_tErbB2_Cellline= [-1, 1, 1, -4, 6]
+                self.simulations[observables.index('tEGFR_au'), :, i] = sol.y[V.EGFR, :] + sol.y[V.EGFR_EGF, :] + sol.y[V.EGFR_BTC, :] + sol.y[V.EGFRi, :] + 2*sol.y[V.pEGFRd, :] + 2*sol.y[V.pEGFRi, :] + 2*sol.y[V.pEGFRi_ph, :] + sol.y[V.pErbB12i, :] + sol.y[V.pErbB13i, :] + sol.y[V.pErbB12, :] + sol.y[V.pErbB13, :] + sol.y[V.pErbB12i_ph, :] + sol.y[V.pErbB13i_ph, :] + sol.y[V.pMetEGFR, :] + sol.y[V.pMetEGFRi, :] + sol.y[V.pMetEGFRi_ph, :]  
+                
+                self.simulations[observables.index('tErbB2_au'), :, i] = sol.y[V.ErbB2, :] + sol.y[V.ErbB2i, :] + 2*sol.y[V.pErbB2, :] + 2*sol.y[V.pErbB2i, :] + 2*sol.y[V.pErbB2i_ph, :] + sol.y[V.pErbB12, :] + sol.y[V.pErbB32, :] + sol.y[V.pErbB12i, :] + sol.y[V.pErbB32i, :] + sol.y[V.pErbB12i_ph, :] +sol.y[V.pErbB32i_ph, :]
+                
+                self.simulations[observables.index('tErbB3_au'), :, i] = sol.y[V.ErbB3, :] + sol.y[V.ErbB3_HRG, :] + sol.y[V.ErbB3i, :] + 2*sol.y[V.pErbB3d, :] +2*sol.y[V.pErbB3i, :] + 2*sol.y[V.pErbB3i_ph, :] + sol.y[V.pErbB32, :] + sol.y[V.pErbB13, :] + sol.y[V.pErbB32i, :] + sol.y[V.pErbB13i, :] + sol.y[V.pErbB32i_ph, :] + sol.y[V.pErbB13i_ph, :] + sol.y[V.pMetErbB3, :] + sol.y[V.pMetErbB3i, :] + sol.y[V.pMetErbB3i_ph, :]
+                
+                self.simulations[observables.index('tIGF1R_au'), :, i] = sol.y[V.IGF1R, :] + sol.y[V.IGF1R_IGF1, :] + sol.y[V.IGF1Ri, :] + 2*sol.y[V.pIGF1Rd, :] + 2*sol.y[V.pIGF1Ri, :] + 2*sol.y[V.pIGF1Ri_ph, :]
+                
 
-                offset_tErbB3_Cellline= [-1,1,1,-5,5]
-                scale_tErbB3_Cellline= [-1, 1, 1, -4, 6]
+                self.simulations[observables.index('pEGFR_au'), :, i] = 2*sol.y[V.pEGFRd, :] + 2*sol.y[V.pEGFRi, :] + 2*sol.y[V.pEGFRi_ph, :] + sol.y[V.pErbB12i, :] + sol.y[V.pErbB13i, :] + sol.y[V.pErbB12, :] + sol.y[V.pErbB13, :] + sol.y[V.pErbB12i_ph, :] + sol.y[V.pErbB13i_ph, :] + sol.y[V.pMetEGFR, :] + sol.y[V.pMetEGFRi, :] + sol.y[V.pMetEGFRi_ph, :]
+                
+                self.simulations[observables.index('pErbB2_au'), :, i] = 2*sol.y[V.pErbB2, :] + 2*sol.y[V.pErbB2i, :] + 2*sol.y[V.pErbB2i_ph, :] + sol.y[V.pErbB12, :] + sol.y[V.pErbB32, :] + sol.y[V.pErbB12i, :] + sol.y[V.pErbB32i, :] + sol.y[V.pErbB12i_ph, :] + sol.y[V.pErbB32i_ph, :]
+                
+                self.simulations[observables.index('pErbB3_au'), :, i] = 2*sol.y[V.pErbB3d, :] + 2*sol.y[V.pErbB3i, :] + 2*sol.y[V.pErbB3i_ph, :] + sol.y[V.pErbB32, :] + sol.y[V.pErbB13, :] + sol.y[V.pErbB32i, :] + sol.y[V.pErbB13i, :] + sol.y[V.pErbB32i_ph, :] + sol.y[V.pErbB13i_ph, :] + sol.y[V.pMetErbB3, :] + sol.y[V.pMetErbB3i, :] + sol.y[V.pMetErbB3i_ph, :]
+                
+                self.simulations[observables.index('pIGF1R_au'), :, i] = 2*sol.y[V.pIGF1Rd, :] + 2*sol.y[V.pIGF1Ri, :] + 2*sol.y[V.pIGF1Ri_ph, :]
+                
+                self.simulations[observables.index('pMet_au'), :, i] = 2*sol.y[V.pMetd, :] + 2*sol.y[V.pMeti, :] + 2*sol.y[V.pMeti_ph, :] + sol.y[V.pMetEGFR, :] + sol.y[V.pMetEGFRi, :] + sol.y[V.pMetEGFRi_ph, :] + sol.y[V.pMetErbB3, :] + sol.y[V.pMetErbB3i, :] + sol.y[V.pMetErbB3i_ph, :]
+                
 
-                offset_tIGF1R_Cellline= [-1,1,1,-5,5]
-                scale_tIGF1R_Cellline= [-1, 1, 1, -4, 6]
+                self.simulations[observables.index('pMEK_au'), :, i] = sol.y[V.pMEK, :]
+                
+                self.simulations[observables.index('pERK_au'), :, i] = sol.y[V.pERK, :]
+                
 
-                offset_pEGFR_Cellline= [-1,1,1,-5,5]
-                scale_pEGFR_Cellline= [-1, 1, 1, -4, 6]
+                self.simulations[observables.index('pAKT_au'), :, i] = sol.y[V.pAKT, :]
+                
 
-                offset_pErbB2_Cellline= [-1,1,1,-5,5]
-                scale_pErbB2_Cellline= [-1, 1, 1, -4, 6]
+                self.simulations[observables.index('pS6K1_au'), :, i] = sol.y[V.pS6K1, :] 
+                
+                self.simulations[observables.index('pS6_au'), :, i] = sol.y[V.pS6, :]
+                
 
-                offset_pErbB3_Cellline= [-1,1,1,-5,5]
-                scale_pErbB3_Cellline= [-1, 1, 1, -4, 6]
+class ExperimentalData(object):
+    """
+    Set experimental data.
+    Attributes
+    ----------
+    experiments : list of dict
+        Time series data.
+    error_bars : list of dict
+        Error bars to show in figures.
+    """
 
-                offset_pIGF1R_Cellline= [-1,1,1,-5,5]
-                scale_pIGF1R_Cellline= [-1, 1, 1, -4, 6]
+    def __init__(self):
+        self.experiments = [None] * len(observables)
+        self.error_bars = [None] * len(observables)
 
-                offset_pMet_Cellline= [-1,1,1,-5,5]
-                scale_pMet_Cellline= [-1, 1, 1, -4, 6]
+    def set_data(self):
+        pass
 
-                offset_pMEK_Cellline= [-1,1,1,-5,5]
-                scale_pMEK_Cellline= [-1, 1, 1, -4, 6]
-
-                offset_pERK_Cellline= [-7,2,1,-8,-6]
-                scale_pERK_Cellline= [-1, 1, 1, -4, 6]
-
-                offset_pAKT_Cellline= [-1,1,1,-5,5]
-                scale_pAKT_Cellline= [-1, 1, 1, -4, 6]
-
-                offset_pS6K1_Cellline= [-7,2,1,-8,-6]
-                scale_pS6K1_Cellline= [-1, 1, 1, -4, 6]
-
-                offset_pS6_Cellline= [-7,2,1,-8,-6]
-                scale_pS6_Cellline= [-1, 1, 1, -4, 6]
-                '''
-                # set some fixed parameters and modeling options
-                offset_tEGFR_Cellline= [5]
-                scale_tEGFR_Cellline = [5]
-
-                offset_tErbB2_Cellline= -1
-                scale_tErbB2_Cellline= -1
-
-                offset_tErbB3_Cellline= -1
-                scale_tErbB3_Cellline= -1
-
-                offset_tIGF1R_Cellline= -1
-                scale_tIGF1R_Cellline= -1
-
-                offset_pEGFR_Cellline= -1
-                scale_pEGFR_Cellline= -1
-
-                offset_pErbB2_Cellline= -1
-                scale_pErbB2_Cellline= -1
-
-                offset_pErbB3_Cellline= -1
-                scale_pErbB3_Cellline= -1
-
-                offset_pIGF1R_Cellline= -1
-                scale_pIGF1R_Cellline= -1
-
-                offset_pMet_Cellline= -1
-                scale_pMet_Cellline= -1
-
-                offset_pMEK_Cellline= -1
-                scale_pMEK_Cellline= -1
-
-                offset_pERK_Cellline= -1
-                scale_pERK_Cellline= -1
-
-                offset_pAKT_Cellline= -1
-                scale_pAKT_Cellline= -1
-
-                offset_pS6K1_Cellline= -1
-                scale_pS6K1_Cellline= -1
-
-                offset_pS6_Cellline= -1
-                scale_pS6_Cellline= -1
-
-                self.simulations[observables.index('FACS_EGFR'), :, i] = np.log10(
-                    sol.y[V.EGFR, :] + sol.y[V.EGFR_EGF, :] + sol.y[V.EGFR_BTC, :] + 2*sol.y[V.EGFR_BTC, :] + sol.y[V.pErbB12, :] + sol.y[V.pErbB13, :] + sol.y[V.pMetEGFR, :]
-                )
-                self.simulations[observables.index('FACS_ErbB2'), :, i] = np.log10(
-                    sol.y[V.ErbB2, :] + 2*sol.y[V.pErbB2, :] + sol.y[V.pErbB12, :] + sol.y[V.pErbB32, :]
-                )
-                self.simulations[observables.index('FACS_ErbB3'), :, i] = np.log10(
-                    sol.y[V.ErbB3, :] + sol.y[V.ErbB3_HRG, :] + 2*sol.y[V.pErbB3d, :] + sol.y[V.pErbB32, :] + sol.y[V.pErbB13, :] + sol.y[V.pMetErbB3]
-                )
-                self.simulations[observables.index('FACS_IGF1R'), :, i] = np.log10(
-                    sol.y[V.IGF1R, :] + sol.y[V.IGF1R_IGF1, :] + 2*sol.y[V.pIGF1Rd, :]
-                )
-                self.simulations[observables.index('FACS_Met'), :, i] = np.log10(
-                    sol.y[V.Met, :] + 2*sol.y[V.pMetd, :] + sol.y[V.pMetEGFR, :] + sol.y[V.pMetErbB3, :]
-                )
-
-                self.simulations[observables.index('tEGFR_au'), :, i] = np.log10(
-                    offset_tEGFR_Cellline + scale_tEGFR_Cellline* (sol.y[V.EGFR, :] + sol.y[V.EGFR_EGF, :] + sol.y[V.EGFR_BTC, :] + sol.y[V.EGFRi, :] + 
-                    2*sol.y[V.pEGFRd, :] + 2*sol.y[V.pEGFRi, :] + 2*sol.y[V.pEGFRi_ph, :] + sol.y[V.pErbB12i, :] + sol.y[V.pErbB13i, :] + 
-                    sol.y[V.pErbB12, :] + sol.y[V.pErbB13, :] + sol.y[V.pErbB12i_ph, :] + sol.y[V.pErbB13i_ph, :] + sol.y[V.pMetEGFR, :] + 
-                    sol.y[V.pMetEGFRi, :] + sol.y[V.pMetEGFRi_ph, :])  
-                )
-                self.simulations[observables.index('tErbB2_au'), :, i] = np.log10(
-                    offset_tErbB2_Cellline + scale_tErbB2_Cellline *(sol.y[V.ErbB2, :] + sol.y[V.ErbB2i, :] + 2*sol.y[V.pErbB2, :] + 2*sol.y[V.pErbB2i, :] + 
-                    2*sol.y[V.pErbB2i_ph, :] + sol.y[V.pErbB12, :] + sol.y[V.pErbB32, :] + sol.y[V.pErbB12i, :] + sol.y[V.pErbB32i, :] + sol.y[V.pErbB12i_ph, :] +
-                    sol.y[V.pErbB32i_ph, :])
-                )
-                self.simulations[observables.index('tErbB3_au'), :, i] = np.log10(
-                    offset_tErbB3_Cellline + scale_tErbB3_Cellline *(sol.y[V.ErbB3, :] + sol.y[V.ErbB3_HRG, :] + sol.y[V.ErbB3i, :] + 2*sol.y[V.pErbB3d, :] +
-                    2*sol.y[V.pErbB3i, :] + 2*sol.y[V.pErbB3i_ph, :] + sol.y[V.pErbB32, :] + sol.y[V.pErbB13, :] + sol.y[V.pErbB32i, :] + sol.y[V.pErbB13i, :] + 
-                    sol.y[V.pErbB32i_ph, :] + sol.y[V.pErbB13i_ph, :] + sol.y[V.pMetErbB3, :] + sol.y[V.pMetErbB3i, :] + sol.y[V.pMetErbB3i_ph, :])
-                )
-                self.simulations[observables.index('tIGF1R_au'), :, i] = np.log10(
-                    offset_tIGF1R_Cellline + scale_tIGF1R_Cellline *(sol.y[V.IGF1R, :] + sol.y[V.IGF1R_IGF1, :] + sol.y[V.IGF1Ri, :] + 2*sol.y[V.pIGF1Rd, :] + 
-                    2*sol.y[V.pIGF1Ri, :] + 2*sol.y[V.pIGF1Ri_ph, :])
-                )
-
-                self.simulations[observables.index('pEGFR_au'), :, i] = np.log10(
-                    offset_pEGFR_Cellline + scale_pEGFR_Cellline * (2*sol.y[V.pEGFRd, :] + 2*sol.y[V.pEGFRi, :] + 2*sol.y[V.pEGFRi_ph, :] + sol.y[V.pErbB12i, :] + 
-                    sol.y[V.pErbB13i, :] + sol.y[V.pErbB12, :] + sol.y[V.pErbB13, :] + sol.y[V.pErbB12i_ph, :] + sol.y[V.pErbB13i_ph, :] + sol.y[V.pMetEGFR, :] + 
-                    sol.y[V.pMetEGFRi, :] + sol.y[V.pMetEGFRi_ph, :])
-                )
-                self.simulations[observables.index('pErbB2_au'), :, i] = np.log10(
-                    offset_pErbB2_Cellline + scale_pErbB2_Cellline * (2*sol.y[V.pErbB2, :] + 2*sol.y[V.pErbB2i, :] + 2*sol.y[V.pErbB2i_ph, :] + sol.y[V.pErbB12, :] + 
-                    sol.y[V.pErbB32, :] + sol.y[V.pErbB12i, :] + sol.y[V.pErbB32i, :] + sol.y[V.pErbB12i_ph, :] + sol.y[V.pErbB32i_ph, :])
-                )
-                self.simulations[observables.index('pErbB3_au'), :, i] = np.log10(
-                    offset_pErbB3_Cellline + scale_pErbB3_Cellline * (2*sol.y[V.pErbB3d, :] + 2*sol.y[V.pErbB3i, :] + 2*sol.y[V.pErbB3i_ph, :] + sol.y[V.pErbB32, :] + 
-                    sol.y[V.pErbB13, :] + sol.y[V.pErbB32i, :] + sol.y[V.pErbB13i, :] + sol.y[V.pErbB32i_ph, :] + sol.y[V.pErbB13i_ph, :] + sol.y[V.pMetErbB3, :] + 
-                    sol.y[V.pMetErbB3i, :] + sol.y[V.pMetErbB3i_ph, :])
-                )
-                self.simulations[observables.index('pIGF1R_au'), :, i] = np.log10(
-                    offset_pIGF1R_Cellline + scale_pIGF1R_Cellline * (2*sol.y[V.pIGF1Rd, :] + 2*sol.y[V.pIGF1Ri, :] + 2*sol.y[V.pIGF1Ri_ph, :])
-                )
-                self.simulations[observables.index('pMet_au'), :, i] = np.log10(
-                    offset_pMet_Cellline + scale_pMet_Cellline * (2*sol.y[V.pMetd, :] + 2*sol.y[V.pMeti, :] + 2*sol.y[V.pMeti_ph, :] + 
-                    sol.y[V.pMetEGFR, :] + sol.y[V.pMetEGFRi, :] + sol.y[V.pMetEGFRi_ph, :] + sol.y[V.pMetErbB3, :] + sol.y[V.pMetErbB3i, :] + 
-                    sol.y[V.pMetErbB3i_ph, :])
-                )
-
-                self.simulations[observables.index('pMEK_au'), :, i] = np.log10(
-                    offset_pMEK_Cellline + scale_pMEK_Cellline * sol.y[V.pMEK, :]
-                )
-                self.simulations[observables.index('pERK_au'), :, i] = np.log10(
-                    offset_pERK_Cellline + scale_pERK_Cellline * sol.y[V.pERK, :]
-                )
-
-                self.simulations[observables.index('pAKT_au'), :, i] = np.log10(
-                    offset_pAKT_Cellline + scale_pAKT_Cellline * sol.y[V.pAKT, :]
-                )
-
-                self.simulations[observables.index('pS6K1_au'), :, i] = np.log10(
-                    offset_pS6K1_Cellline + scale_pS6K1_Cellline * sol.y[V.pS6K1, :] 
-                )
-                self.simulations[observables.index('pS6_au'), :, i] = np.log10(
-                    offset_pS6_Cellline + scale_pS6_Cellline * sol.y[V.pS6, :]
-                )
+    @staticmethod
+    def get_timepoint(obs_name):
+        if obs_name in observables:
+            return []
