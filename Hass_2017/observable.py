@@ -74,6 +74,93 @@ class NumericalSimulation(DifferentialEquation):
             if sol is None:
                 return False
             else:
+                '''
+                # set some fixed parameters and modeling options (5)
+                offset_tEGFR_Cellline= [-1,1,1,-5,5]
+                scale_tEGFR_Cellline = [-1, 1, 1, -4, 6]
+
+                offset_tErbB2_Cellline= [-1,1,1,-5,5]
+                scale_tErbB2_Cellline= [-1, 1, 1, -4, 6]
+
+                offset_tErbB3_Cellline= [-1,1,1,-5,5]
+                scale_tErbB3_Cellline= [-1, 1, 1, -4, 6]
+
+                offset_tIGF1R_Cellline= [-1,1,1,-5,5]
+                scale_tIGF1R_Cellline= [-1, 1, 1, -4, 6]
+
+                offset_pEGFR_Cellline= [-1,1,1,-5,5]
+                scale_pEGFR_Cellline= [-1, 1, 1, -4, 6]
+
+                offset_pErbB2_Cellline= [-1,1,1,-5,5]
+                scale_pErbB2_Cellline= [-1, 1, 1, -4, 6]
+
+                offset_pErbB3_Cellline= [-1,1,1,-5,5]
+                scale_pErbB3_Cellline= [-1, 1, 1, -4, 6]
+
+                offset_pIGF1R_Cellline= [-1,1,1,-5,5]
+                scale_pIGF1R_Cellline= [-1, 1, 1, -4, 6]
+
+                offset_pMet_Cellline= [-1,1,1,-5,5]
+                scale_pMet_Cellline= [-1, 1, 1, -4, 6]
+
+                offset_pMEK_Cellline= [-1,1,1,-5,5]
+                scale_pMEK_Cellline= [-1, 1, 1, -4, 6]
+
+                offset_pERK_Cellline= [-7,2,1,-8,-6]
+                scale_pERK_Cellline= [-1, 1, 1, -4, 6]
+
+                offset_pAKT_Cellline= [-1,1,1,-5,5]
+                scale_pAKT_Cellline= [-1, 1, 1, -4, 6]
+
+                offset_pS6K1_Cellline= [-7,2,1,-8,-6]
+                scale_pS6K1_Cellline= [-1, 1, 1, -4, 6]
+
+                offset_pS6_Cellline= [-7,2,1,-8,-6]
+                scale_pS6_Cellline= [-1, 1, 1, -4, 6]
+                '''
+                # set some fixed parameters and modeling options
+                offset_tEGFR_Cellline= [5]
+                scale_tEGFR_Cellline = [5]
+
+                offset_tErbB2_Cellline= -1
+                scale_tErbB2_Cellline= -1
+
+                offset_tErbB3_Cellline= -1
+                scale_tErbB3_Cellline= -1
+
+                offset_tIGF1R_Cellline= -1
+                scale_tIGF1R_Cellline= -1
+
+                offset_pEGFR_Cellline= -1
+                scale_pEGFR_Cellline= -1
+
+                offset_pErbB2_Cellline= -1
+                scale_pErbB2_Cellline= -1
+
+                offset_pErbB3_Cellline= -1
+                scale_pErbB3_Cellline= -1
+
+                offset_pIGF1R_Cellline= -1
+                scale_pIGF1R_Cellline= -1
+
+                offset_pMet_Cellline= -1
+                scale_pMet_Cellline= -1
+
+                offset_pMEK_Cellline= -1
+                scale_pMEK_Cellline= -1
+
+                offset_pERK_Cellline= -1
+                scale_pERK_Cellline= -1
+
+                offset_pAKT_Cellline= -1
+                scale_pAKT_Cellline= -1
+
+                offset_pS6K1_Cellline= -1
+                scale_pS6K1_Cellline= -1
+
+                offset_pS6_Cellline= -1
+                scale_pS6_Cellline= -1
+
                 self.simulations[observables.index('FACS_EGFR'), :, i] = np.log10(
                     sol.y[V.EGFR, :] + sol.y[V.EGFR_EGF, :] + sol.y[V.EGFR_BTC, :] + 2*sol.y[V.EGFR_BTC, :] + sol.y[V.pErbB12, :] + sol.y[V.pErbB13, :] + sol.y[V.pMetEGFR, :]
                 )
