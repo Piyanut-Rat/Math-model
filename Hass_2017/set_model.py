@@ -402,6 +402,42 @@ def param_values():
     x[C.relto_init_Met] = 1.80*10**(+0)
     x[C.scale_Ligand] = 3.78*10**(+4)   
 
+    #scale
+    x[C.scale_pAKT_CelllineA431] = 7.83*10**(0)
+    x[C.scale_pAKT_CelllineACHN_197] = 3.44*10**(4)
+    x[C.scale_pAKT_CelllineACHN_200] = 5.18*10**(5)
+    x[C.scale_pAKT_CelllineACHN_218] = 1.35*10**(3)
+    x[C.scale_pAKT_CelllineACHN_DM] = 1.62*10**(5)
+    x[C.scale_pAKT_CelllineADRr] = 1.31*10**(1)
+    x[C.scale_pAKT_CelllineADRr_B] = 5.65*10**(3)
+    x[C.scale_pAKT_CelllineADRr_B2] = 4.18*10**(2)
+    x[C.scale_pAKT_CelllineBT20] = 4.38*10**(0)
+    x[C.scale_pAKT_CelllineBxPc3] = 9.87*10**(-1)
+    x[C.scale_pAKT_CelllineH322M] = 7.14*10**(-1)
+    x[C.scale_pAKT_CelllineIGROV1] = 1.24*10**(1)
+    x[C.scale_pEGFR_CelllineA431] = 7.89*10**(2)
+    x[C.scale_pEGFR_CelllineACHN_197] = 9.71*10**(4)
+    x[C.scale_pEGFR_CelllineACHN_200] = 3.13*10**(-1)
+    x[C.scale_pEGFR_CelllineACHN_218] = 1.72*10**(-4)
+    x[C.scale_pEGFR_CelllineACHN_DM] = 1.43*10**(4)
+    x[C.scale_pEGFR_CelllineADRr] = 7.54*10**(-1)
+    x[C.scale_pEGFR_CelllineADRr_B] = 1.41*10**(3)
+    x[C.scale_pEGFR_CelllineADRr_B2] = 1.90*10**(2)
+    x[C.scale_pEGFR_CelllineBT20] = 1.39*10**(3)
+    x[C.scale_pEGFR_CelllineBxPc3] = 2.45*10**(1)
+    x[C.scale_pEGFR_CelllineH322M] = 3.30*10**(1)
+    x[C.scale_pEGFR_CelllineIGROV1] = 5.01*10**(3)
+    x[C.scale_pERK_CelllineA431] = 4.18*10**(-1)
+    x[C.scale_pERK_CelllineACHN_197] = 3.40*10**(4)
+    x[C.scale_pERK_CelllineACHN_200] = 9.02*10**(4)
+    x[C.scale_pERK_CelllineACHN_218] = 3.33*10**(4)
+    x[C.scale_pERK_CelllineACHN_DM] = 4.58*10**(4)
+    x[C.scale_pERK_CelllineADRr] =  8.92*10**(-1)
+    x[C.scale_pERK_CelllineADRr_B] = 5.76*10**(3)
+    x[C.scale_pERK_CelllineADRr_B2] = 2.26*10**(2)
+    x[C.scale_pERK_CelllineBT20] = 5.72*10**(-1)
+    #360
+
     return x
 
 
