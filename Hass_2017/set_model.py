@@ -475,7 +475,7 @@ def param_values():
     x[C.scale_pIGF1R_CelllineBT20] = 9.08*10**(1)
     x[C.scale_pIGF1R_CelllineBxPc3] = 3.43*10**(2)
     x[C.scale_pIGF1R_CelllineH322M] = 1.19*10**(4)
-    x[C.scal_pIGF1R_CelllineIGROV1] = 2.35*10**(3)
+    x[C.scale_pIGF1R_CelllineIGROV1] = 2.35*10**(3)
     x[C.scale_pMEK_CelllineA431] = 2.20*10**(3)
     x[C.scale_pMEK_CelllineACHN_197] = 2.14*10**(-4)
     x[C.scale_pMEK_CelllineACHN_200] = 6.79*10**(-4)
@@ -487,7 +487,7 @@ def param_values():
     x[C.scale_pMEK_CelllineADRr_B2] = 2.51*10**(3)
     x[C.scale_pMEK_CelllineBT20] = 3.66*10**(3)
     x[C.scale_pMEK_CelllineBxPc3] = 1.34*10**(3)
-    x[C.scale _MEK_CelllineH322M] = 3.51*10**(2)
+    x[C.scale_pMEK_CelllineH322M] = 3.51*10**(2)
     x[C.scale_pMEK_CelllineIGROV1] = 7.66*10**(3)
     x[C.scale_pMet_CelllineA431] = 6.41*10**(-3)
     x[C.scale_pMet_CelllineACHN_197] = 2.83*10**(3)
@@ -505,7 +505,7 @@ def param_values():
     x[C.scale_pS6K1_CelllineACHN_197] = 4.40*10**(5)
     x[C.scale_pS6K1_CelllineACHN_200] = 3.76*10**(-4)
     x[C.scale_pS6K1_CelllineACHN_218] = 1.71*10**(4)
-    x[C.scale_pS6K1_CelllineACHN_DM] = 1.63*10*8(-1)
+    x[C.scale_pS6K1_CelllineACHN_DM] = 1.63*10**(-1)
     x[C.scale_pS6K1_CelllineADRr] = 1.39*10**(1)
     x[C.scale_pS6K1_CelllineADRr_B] = 4.00*10**(5)
     x[C.scale_pS6K1_CelllineADRr_B2] = 1.14*10**(0)
@@ -574,6 +574,21 @@ def param_values():
     x[C.scale_tIGF1R_CelllineH322M] = 2.17*10**(0)
     x[C.scale_tIGF1R_CelllineIGROV1] = 1.45*10**(1)
 
+    #offset
+    x[C.offset_tEGFR_CelllineH322M] = 1.46*10**(0) 
+    x[C.offset_tErbB2_CelllineH322M] = 7.91*10**(0)  
+    x[C.offset_tErbB3_CelllineH322M] = 7.86*10**(-1)
+    x[C.offset_tIGF1R_CelllineH322M] = 4.21*10**(-2) 
+    x[C.offset_pEGFR_CelllineH322M] = 4.90*10**(0) 
+    x[C.offset_pErbB2_CelllineH322M] = 1.09*10**(0)
+    x[C.offset_pErbB3_CelllineH322M] = 1.00*10**(-5) 
+    x[C.offset_pIGF1R_CelllineH322M] = 4.07*10**(2) 
+    x[C.offset_pMet_CelllineH322M] = 3.14*10**(-2) 
+    x[C.offset_pMEK_CelllineH322M] = 1.37*10**(-1) 
+    x[C.offset_pERK_CelllineH322M] = 1.00*10**(-7)
+    x[C.offset_pAKT_CelllineH322M] = 1.87*10**(-1)
+    x[C.offset_pS6K1_CelllineH322M] = 1.00*10**(-7) 
+    x[C.offset_pS6_CelllineH322M] = 1.00*10**(-7) 
 
 
     return x
@@ -581,6 +596,7 @@ def param_values():
 
 def initial_values():
     y0 = [0]*V.NUM
+
 
     return y0
 ''''
