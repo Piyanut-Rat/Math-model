@@ -283,7 +283,7 @@ NAMES = [
     #'S6_phosphorylation_pS6K1',
     #'S6_phosphorylation_pERK',
     #'pS6_dephosphorylation',
-    'cale_pAKT_CelllineA431',
+    'scale_pAKT_CelllineA431',
     'scale_pAKT_CelllineACHN_197',
     'scale_pAKT_CelllineACHN_200',
     'scale_pAKT_CelllineACHN_218',
@@ -364,7 +364,7 @@ NAMES = [
     'scale_pMEK_CelllineADRr_B',
     'scale_pMEK_CelllineADRr_B2',
     'scale_pMEK_CelllineBT20',
-    'scale_pMEK_CelllineBxPc3',
+    
     'scale_pMEK_CelllineBxPc3',
     'scale_pMEK_CelllineH322M',
     'scale_pMEK_CelllineIGROV1',
@@ -452,6 +452,22 @@ NAMES = [
     'scale_tIGF1R_CelllineBxPc3',
     'scale_tIGF1R_CelllineH322M',
     'scale_tIGF1R_CelllineIGROV1',
+
+        #offset
+    'offset_tEGFR_CelllineH322M',
+    'offset_tErbB2_CelllineH322M',
+    'offset_tErbB3_CelllineH322M',
+    'offset_tIGF1R_CelllineH322M',
+    'offset_pEGFR_CelllineH322M',
+    'offset_pErbB2_CelllineH322M',
+    'offset_pErbB3_CelllineH322M',
+    'offset_pIGF1R_CelllineH322M',
+    'offset_pMet_CelllineH322M',
+    'offset_pMEK_CelllineH322M',
+    'offset_pERK_CelllineH322M',
+    'offset_pAKT_CelllineH322M',
+    'offset_pS6K1_CelllineH322M',
+    'offset_pS6_CelllineH322M',
      
     
 ]
