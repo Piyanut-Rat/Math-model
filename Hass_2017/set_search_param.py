@@ -328,6 +328,40 @@ class SearchParam(object):
         search_rgn[:, C.relto_init_Met] = [1e-4, 1e+4]
 
         search_rgn[:, C.scale_Ligand] = [1e+1, 1e+6]
+        #offset
+        search_rgn[:, C.offset_tEGFR_CelllineH322M] = [1e-5, 1e+5]
+        search_rgn[:, C.offset_tErbB2_CelllineH322M] = [1e-5, 1e+5]
+        search_rgn[:, C.offset_tErbB3_CelllineH322M] = [1e-5, 1e+5]
+        search_rgn[:, C.offset_tIGF1R_CelllineH322M] = [1e-5, 1e+5]
+        search_rgn[:, C.offset_pEGFR_CelllineH322M] = [1e-5, 1e+5]
+        search_rgn[:, C.offset_pErbB2_CelllineH322M] = [1e-5, 1e+5]
+        search_rgn[:, C.offset_pErbB3_CelllineH322M] = [1e-5, 1e+5]
+        search_rgn[:, C.offset_pIGF1R_CelllineH322M] = [1e-5, 1e+5]
+        search_rgn[:, C.offset_pMet_CelllineH322M] = [1e-5, 1e+5]
+        search_rgn[:, C.offset_pMEK_CelllineH322M] = [1e-5, 1e+5]
+        search_rgn[:, C.offset_pERK_CelllineH322M] = [1e-5, 1e+5]
+        search_rgn[:, C.offset_pAKT_CelllineH322M] = [1e-5, 1e+5]
+
+        search_rgn[:, C.offset_pS6K1_CelllineH322M] = [1e-8, 1e-6]
+        search_rgn[:, C.offset_pS6_CelllineH322M] = [1e-8, 1e-6]
+
+        #scale
+        search_rgn[:, C.scale_tEGFR_CelllineH322M] = [1e-4, 1e+6]
+        search_rgn[:, C.scale_tErbB2_CelllineH322M] = [1e-4, 1e+6]
+        search_rgn[:, C.scale_tErbB3_CelllineH322M] = [1e-4, 1e+6]
+        search_rgn[:, C.scale_tIGF1R_CelllineH322M] = [1e-5, 1e+6]
+        search_rgn[:, C.scale_pEGFR_CelllineH322M] = [1e-4, 1e+6]
+        search_rgn[:, C.scale_pErbB2_CelllineH322M] = [1e-4, 1e+6]
+        search_rgn[:, C.scale_pErbB3_CelllineH322M] = [1e-4, 1e+6]
+        search_rgn[:, C.scale_pIGF1R_CelllineH322M] = [1e-4, 1e+6]
+        search_rgn[:, C.scale_pMet_CelllineH322M] = [1e-4, 1e+6]
+        search_rgn[:, C.scale_pMEK_CelllineH322M] = [1e-4, 1e+6]
+        search_rgn[:, C.scale_pERK_CelllineH322M] = [1e-4, 1e+6]
+        search_rgn[:, C.scale_pAKT_CelllineH322M] = [1e-4, 1e+6]
+
+        search_rgn[:, C.scale_pS6K1_CelllineH322M] = [1e-4, 1e+6]
+        search_rgn[:, C.scale_pS6_CelllineH322M] = [1e-4, 1e+6]
+
 
         search_rgn = convert_scale(
             region = search_rgn,
