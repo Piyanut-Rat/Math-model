@@ -38,11 +38,13 @@ class NumericalSimulation(DifferentialEquation):
     def __init__(self):
         super().__init__(pertubation = {})
         self.normalization = {}
+        for observable in observables:
+            self.normalization[observable] = {'timepoint': None, 'condition': []}
 
-    t = range(300) # unit; sec.
+    t = range(250) # unit; sec.
 
     # experimental conditions
-    conditions = ['control','0.156','0.625', '2.5', '10']
+    conditions = ['control','0.156','0.625', '2.500', '10.000']
 
     simulations = np.empty((len(observables), len(t), len(conditions)))
 
@@ -51,58 +53,34 @@ class NumericalSimulation(DifferentialEquation):
             self.pertubation = _perturbation
         #get steady state
         x[C.Ligand] = x[C.no_ligand] # No ligand binding
-        t_start = 0
-        t_end = 300
-        h = 1000
-        t = np.linspace(t_start,t_end,h)
-        
-        y0 = get_steady_state(self.diffeq, y0, tuple(x))
+        y0[V.dose_EGF] = 0
+        y0[V.dose_HGF] = 0
+        y0[V.dose_IGF1] = 0
+        y0[V.dose_HRG] = 0
+        #y0 = get_steady_state(self.diffeq, y0, tuple(x))
         
         if not y0:
             return False
         # add ligand
-        '''
-        for i, condition in enumerate(self.conditions):
-            if condition == 'EGF':
-                x[C.Ligand] = x[C.EGF]
-            elif condition == 'HRG':
-                x[C.Ligand] = x[C.HRG]
-            elif condition == 'IGF1':
-                x[C.Ligand] = x[C.IGF1]
-            elif condition == 'HGF':
-                x[C.Ligand] = x[C.HGF]
-            elif condition == 'BTC':
-                x[C.Ligand] = x[C.BTC]
-        '''
         
-        #for i in range(conditions)
         for i, condition in enumerate(self.conditions):
-            if i==0: 
+            
+            if condition == 'control':
                 y0[V.dose_EGF] = 0
-                y0[V.dose_HGF] = 0
-                y0[V.dose_IGF1] = 0
-                y0[V.dose_HRG] = 0
-            elif i==1:
+
+            elif condition == '0.156':
                 y0[V.dose_EGF] = 0.156*x[C.scale_Ligand]
-                y0[V.dose_IGF1] = 0
-                y0[V.dose_HRG] = 0
-            elif i==2:
+
+            elif condition == '0.625':
                 y0[V.dose_EGF] = 0.625*x[C.scale_Ligand]
-                y0[V.dose_HGF] = 0
-                y0[V.dose_IGF1] = 0
-                y0[V.dose_HRG] = 0
-            elif i==3:
+
+            elif condition == '2.500':
                 y0[V.dose_EGF] = 2.5*x[C.scale_Ligand]
-                y0[V.dose_HGF] = 0
-                y0[V.dose_IGF1] = 0
-                y0[V.dose_HRG] = 0
-            elif i==4:
+
+            elif condition == '10.000':
                 y0[V.dose_EGF] = 10*x[C.scale_Ligand]
-                y0[V.dose_HGF] = 0
-                y0[V.dose_IGF1] = 0
-                y0[V.dose_HRG] = 0
-            
-            
+
+
             sol = solve_ode(self.diffeq, y0, self.t, tuple(x))
 
             if sol is None:
@@ -119,7 +97,7 @@ class NumericalSimulation(DifferentialEquation):
                 )
                 self.simulations[observables.index('FACS_Met'), :, i] = np.log10(sol.y[V.Met, :] + 2*sol.y[V.pMetd, :] + sol.y[V.pMetEGFR, :] + sol.y[V.pMetErbB3, :]
                 )
-                '''
+                
                 self.simulations[observables.index('tEGFR_au'), :, i] = np.log10(
                     x[C.offset_tEGFR_CelllineH322M] + x[C.scale_tEGFR_CelllineH322M]* (sol.y[V.EGFR, :] + sol.y[V.EGFR_EGF, :] + sol.y[V.EGFR_BTC, :] + sol.y[V.EGFRi, :] + 
                     2*sol.y[V.pEGFRd, :] + 2*sol.y[V.pEGFRi, :] + 2*sol.y[V.pEGFRi_ph, :] + sol.y[V.pErbB12i, :] + sol.y[V.pErbB13i, :] + 
@@ -140,7 +118,7 @@ class NumericalSimulation(DifferentialEquation):
                     x[C.offset_tIGF1R_CelllineH322M] + x[C.scale_tIGF1R_CelllineH322M] *(sol.y[V.IGF1R, :] + sol.y[V.IGF1R_IGF1, :] + sol.y[V.IGF1Ri, :] + 2*sol.y[V.pIGF1Rd, :] + 
                     2*sol.y[V.pIGF1Ri, :] + 2*sol.y[V.pIGF1Ri_ph, :])
                 )
-
+                '''
                 self.simulations[observables.index('pEGFR_au'), :, i] = np.log10(
                     x[C.offset_pEGFR_CelllineH322M] + x[C.scale_pEGFR_CelllineH322M] * (2*sol.y[V.pEGFRd, :] + 2*sol.y[V.pEGFRi, :] + 2*sol.y[V.pEGFRi_ph, :] + sol.y[V.pErbB12i, :] + 
                     sol.y[V.pErbB13i, :] + sol.y[V.pErbB12, :] + sol.y[V.pErbB13, :] + sol.y[V.pErbB12i_ph, :] + sol.y[V.pErbB13i_ph, :] + sol.y[V.pMetEGFR, :] + 
@@ -155,6 +133,7 @@ class NumericalSimulation(DifferentialEquation):
                     sol.y[V.pErbB13, :] + sol.y[V.pErbB32i, :] + sol.y[V.pErbB13i, :] + sol.y[V.pErbB32i_ph, :] + sol.y[V.pErbB13i_ph, :] + sol.y[V.pMetErbB3, :] + 
                     sol.y[V.pMetErbB3i, :] + sol.y[V.pMetErbB3i_ph, :])
                 )
+                '''
                 self.simulations[observables.index('pIGF1R_au'), :, i] = np.log10(
                     x[C.offset_pIGF1R_CelllineH322M] + x[C.scale_pIGF1R_CelllineH322M] * (2*sol.y[V.pIGF1Rd, :] + 2*sol.y[V.pIGF1Ri, :] + 2*sol.y[V.pIGF1Ri_ph, :])
                 )
@@ -166,14 +145,16 @@ class NumericalSimulation(DifferentialEquation):
 
                 self.simulations[observables.index('pMEK_au'), :, i] = np.log10(x[C.offset_pMEK_CelllineH322M] + x[C.scale_pMEK_CelllineH322M] * sol.y[V.pMEK, :]
                 )
+                '''
                 self.simulations[observables.index('pERK_au'), :, i] = np.log10(x[C.offset_pERK_CelllineH322M] + x[C.scale_pERK_CelllineH322M] * sol.y[V.pERK, :]
                 )
 
                 self.simulations[observables.index('pAKT_au'), :, i] = np.log10(x[C.offset_pAKT_CelllineH322M] + x[C.scale_pAKT_CelllineH322M] * sol.y[V.pAKT, :]
                 )
-
+                '''
                 self.simulations[observables.index('pS6K1_au'), :, i] = np.log10(x[C.offset_pS6K1_CelllineH322M] + x[C.scale_pS6K1_CelllineH322M] * sol.y[V.pS6K1, :] 
                 )
+                '''
                 self.simulations[observables.index('pS6_au'), :, i] = np.log10(x[C.offset_pS6_CelllineH322M] + x[C.scale_pS6_CelllineH322M] * sol.y[V.pS6, :]
                 )
                 
