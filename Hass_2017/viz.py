@@ -14,22 +14,25 @@ class Visualization(object):
                 "xticks": None,
                 "xlabel": "Time",
                 "ylim": (),
+                
                 "yticks": None,
                 "ylabel": observables[i].replace("__", "\n").replace("_", " "),
                 "exp_data": True,
-                "legend_loc": None,
+                "legend_loc": True,
                 "cmap": [self.cm.colors[j] for j in range(10)],
                 "shape": Line2D.filled_markers,
                 "dont_show": [],
             }
             for i, _ in enumerate(observables)
+            
         ]
 
         self.multiplot_options = {
             "fig_name": "multiplot_observables",
             "observables": [],
-            "condition": None,
+            "condition": [],
             "xlim": (),
+
             "xticks": None,
             "xlabel": "Time",
             "ylim": (),
@@ -41,6 +44,8 @@ class Visualization(object):
 
         self.sensitivity_options = {
             "figsize": (12, 5),
+            #"graph_color": ['k','b','c','r','y'],
+            #"graph_labelname": ['control, 0 nM', '0.156 nM', '0.625 nM', '2.5 nM', '10.0 nM'],
             "width": 0.3,
             "legend_loc": "upper left",
             "cmap": [self.cm.colors[j] for j in range(10)],
@@ -48,7 +53,8 @@ class Visualization(object):
     
     def get_timecourse_options(self):
         for i, _ in enumerate(observables):
-            self.timecourse_options[i]["xlim"] = (-10, 250)
+
+            self.timecourse_options[i]["xlim"] = (-10, 400)
             self.timecourse_options[i]["xticks"] = [50 * i for i in range(5)]
             self.timecourse_options[i]["xlabel"] = "Time (min)"
 
@@ -61,33 +67,36 @@ class Visualization(object):
     @staticmethod
     def set_timecourse_rcParams():
         """figure/simulation"""
-        plt.rcParams["font.size"] = 18
+        plt.rcParams["font.size"] = 12
         plt.rcParams["axes.linewidth"] = 1.5
         plt.rcParams["xtick.major.width"] = 1.5
         plt.rcParams["ytick.major.width"] = 1.5
         plt.rcParams["lines.linewidth"] = 1.8
-        plt.rcParams["lines.markersize"] = 12
-        # plt.rcParams['font.family'] = 'Arial'
-        # plt.rcParams['mathtext.fontset'] = 'custom'
-        # plt.rcParams['mathtext.it'] = 'Arial:italic'
+        plt.rcParams["lines.markersize"] = 8
+
+        plt.rcParams['font.family'] = 'Arial'
+        
+        plt.rcParams['mathtext.fontset'] = 'custom'
+        plt.rcParams['mathtext.it'] = 'Arial:italic'
 
     @staticmethod
     def set_param_range_rcParams():
         """figure/param_range"""
-        plt.rcParams["font.size"] = 12
+
+        plt.rcParams["font.size"] = 8
         plt.rcParams["axes.linewidth"] = 1.2
         plt.rcParams["xtick.major.width"] = 1.2
         plt.rcParams["ytick.major.width"] = 1.2
-        # plt.rcParams['font.family'] = 'Arial'
+        plt.rcParams['font.family'] = 'Arial'
 
     @staticmethod
     def set_sensitivity_rcParams():
         """figure/sensitivity"""
-        plt.rcParams["font.size"] = 12
+        plt.rcParams["font.size"] = 8
         plt.rcParams["axes.linewidth"] = 1.2
         plt.rcParams["xtick.major.width"] = 1.2
         plt.rcParams["ytick.major.width"] = 1.2
-        # plt.rcParams['font.family'] = 'Arial'
+        plt.rcParams['font.family'] = 'Arial'
 
     @staticmethod
     def convert_species_name(name):
