@@ -7,14 +7,20 @@ class DifferentialEquation(object):
 
     #Defined Model
     def diffeq(self, t, y, *x):
-        v = {}
+        v = [0]*114
         # Rate equations
         ## Production
-        v[1] = x[C.EGFR_prod]
-        v[2] = x[C.ErbB2_prod]
-        v[3] = x[C.ErbB3_prod]
-        v[4] = x[C.IGF1R_prod]
-        v[5] = x[C.Met_prod]
+        #v[1] = x[C.EGFR_prod]
+        v[1] =  2*(x[C.EGFR_basal_activation]*	x[C.init_EGFR]**2/(x[C.init_RTKph]*	x[C.pEGFR_phosphatase_binding]+ x[C.pEGFR_degradation]))*x[C.pEGFR_degradation]+ (x[C.EGFR_ErbB2_basal_act]*	x[C.init_EGFR]*	x[C.init_ErbB2]/(x[C.init_RTKph]* x[C.pErbB12i_phosphatase]	+x[C.pErbB12_degradation]))*  x[C.pErbB12_degradation]+ (x[C.EGFR_ErbB3_basal_act]* x[C.init_EGFR]*	x[C.init_ErbB3]/	(x[C.init_RTKph]*	x[C.pErbB13i_phosphatase]+	x[C.pErbB13_degradation]))* x[C.pErbB13_degradation]+	(x[C.Met_EGFR_basal_act]*	x[C.init_EGFR]*	x[C.init_Met]	/(x[C.init_RTKph]*	x[C.pMetEGFRi_phosphatase]+x[C.pMetEGFR_degradation]))* x[C.pMetEGFR_degradation]
+        #v[2] = x[C.ErbB2_prod]
+        v[2] = (x[C.EGFR_ErbB2_basal_act]*	x[C.init_EGFR]*	x[C.init_ErbB2]/(x[C.init_RTKph]* x[C.pErbB12i_phosphatase]	+x[C.pErbB12_degradation]))*x[C.pErbB12_degradation]+2*	(x[C.ErbB2_dimerize]* x[C.init_ErbB2]**2/(x[C.init_RTKph]* x[C.pErbB2i_phosphatase]	+ x[C.pErbB2_degradation]))*x[C.pErbB2_degradation]+ (x[C.ErbB3_ErbB2_basal_act]*x[C.init_ErbB2]* x[C.init_ErbB3]/	(x[C.init_RTKph]*	x[C.pErbB32i_phosphatase]	+x[C.pErbB32_degradation]))*x[C.pErbB32_degradation]
+        #v[3] = x[C.ErbB3_prod]
+        v[3] =  (x[C.EGFR_ErbB3_basal_act]* x[C.init_EGFR]*	x[C.init_ErbB3]/(x[C.init_RTKph]*	x[C.pErbB13i_phosphatase]+x[C.pErbB13_degradation]))* x[C.pErbB13_degradation]	+	(x[C.ErbB3_ErbB2_basal_act]*x[C.init_ErbB2]* x[C.init_ErbB3]/	(x[C.init_RTKph]*	x[C.pErbB32i_phosphatase]	+x[C.pErbB32_degradation]))*	x[C.pErbB32_degradation]+ (x[C.Met_ErbB3_basal_act]*	x[C.init_ErbB3]*	x[C.init_Met]/	(x[C.init_RTKph]*	x[C.pMetErbB3i_phosphatase]	+x[C.pMetErbB3_degradation]))*	x[C.pMetErbB3_degradation]
+        #v[4] = x[C.IGF1R_prod]
+        v[4] = 2* (x[C.IGF1R_basal_activation]*	x[C.init_IGF1R]**2/(x[C.init_RTKph]*x[C.pIGF1Ri_phosphatase]+x[C.pIGF1R_degradation]))* x[C.pIGF1R_degradation]
+        #v[5] = x[C.Met_prod]
+        v[5] = (x[C.Met_EGFR_basal_act]*x[C.init_EGFR]*	x[C.init_Met]	/(x[C.init_RTKph]*	x[C.pMetEGFRi_phosphatase]
+        +x[C.pMetEGFR_degradation]))*x[C.pMetEGFR_degradation]+	(x[C.Met_ErbB3_basal_act]*	x[C.init_ErbB3]*	x[C.init_Met]/	(x[C.init_RTKph]*	x[C.pMetErbB3i_phosphatase]	+x[C.pMetErbB3_degradation]))* x[C.pMetErbB3_degradation]+ 2*(x[C.Met_basal_act]* x[C.init_Met]**2/(x[C.init_RTKph]*	x[C.pMeti_phosphatase]	+	x[C.pMet_degradation]))*x[C.pMet_degradation]
 
         ## Ligand binding
         v[6] = y[V.EGFR]* x[C.EGFR_lig_binding]* y[V.dose_EGF]
@@ -136,16 +142,16 @@ class DifferentialEquation(object):
         v[85] = x[C.pMetEGFRi_dephosph]* y[V.pMetEGFRi_ph]
 
         ##DOWNSTREAM
-        ###ERK branch
-        v[86] = (y[V.MEK]* x[C.MEK_phosphorylation_pEGFR]* y[V.pEGFRd])/(1+x[C.feedback_pAKT]* x[C.init_pAKT]+x[C.feedback_pERK]* y[V.pERK])
-        v[87] = (y[V.MEK]* x[C.MEK_phosphorylation_pErbB12]* y[V.pErbB12])/(1+x[C.feedback_pAKT]* x[C.init_pAKT]+x[C.feedback_pERK]* y[V.pERK])
-        v[88] = (y[V.MEK]* x[C.MEK_phosphorylation_pErbB13]* y[V.pErbB13])/(1+x[C.feedback_pAKT]* x[C.init_pAKT]+x[C.feedback_pERK]* y[V.pERK])
-        v[89] = (y[V.MEK]* x[C.MEK_phosphorylation_pErbB32]* y[V.pErbB32])/(1+x[C.feedback_pAKT]* x[C.init_pAKT]+x[C.feedback_pERK]* y[V.pERK])
-        v[90] = (y[V.MEK]* x[C.MEK_phosphorylation_pMetd]* y[V.pMetd])/(1+x[C.feedback_pAKT]* x[C.init_pAKT]+x[C.feedback_pERK]* y[V.pERK])
-        v[91] = (y[V.MEK]* x[C.MEK_phosphorylation_pMetEGFR]* y[V.pMetEGFR])/(1+x[C.feedback_pAKT]* x[C.init_pAKT]+x[C.feedback_pERK]* y[V.pERK])
-        v[92] = (y[V.MEK]* x[C.MEK_phosphorylation_pIGF1R]* y[V.pIGF1Rd])/(1+x[C.feedback_pAKT]* x[C.init_pAKT]+x[C.feedback_pERK]* y[V.pERK])
-        v[93] = (y[V.MEK]* x[C.MEK_phosphorylation_pMetErbB3]* y[V.pMetErbB3])/(1+x[C.feedback_pAKT]* x[C.init_pAKT]+x[C.feedback_pERK]* y[V.pERK])
-        v[94] = (y[V.MEK]* x[C.MEK_internIGF1R_effect]* x[C.MEK_phosphorylation_pIGF1R]* y[V.pIGF1Ri])/(1+x[C.feedback_pAKT]* x[C.init_pAKT]+x[C.feedback_pERK]* y[V.pERK])
+        ###ERK branch !init_pAKT, init_pEGFRd, init_pErbB12,init_pErbB13,init_pErbB32,init_pIGF1Ri, init_pIGF1Rd, init_pMetEGFR=Init_pMET_EGFR, init_pMetErbB3,init_pMetd
+        v[86] = (y[V.MEK]* x[C.MEK_phosphorylation_pEGFR]* y[V.pEGFRd])/(1+x[C.feedback_pAKT]* (x[C.init_AKT]*	(x[C.AKT_activation_pEGFR]*	(x[C.EGFR_basal_activation]*	x[C.init_EGFR]**2/x[C.pEGFR_internalize])+ x[C.AKT_activation_pErbB12]*	(x[C.EGFR_ErbB2_basal_act]*	x[C.init_EGFR]*	x[C.init_ErbB2]/x[C.pErbB12_internalize])+ x[C.AKT_activation_pErbB13]*	(x[C.EGFR_ErbB3_basal_act]*	x[C.init_EGFR]*	x[C.init_ErbB3]/x[C.pErbB13_internalize])	+	x[C.AKT_activation_pErbB32]* (x[C.ErbB3_ErbB2_basal_act]*	x[C.init_ErbB2]*	x[C.init_ErbB3]/x[C.pErbB32_internalize])	+	x[C.AKT_activation_pIGF1R]*	x[C.AKT_internIGF1R_effect]*	(x[C.IGF1R_basal_activation]*	x[C.init_IGF1R]**2/(x[C.init_RTKph]*	x[C.pIGF1Ri_phosphatase]	+	x[C.pIGF1R_degradation]))	+	x[C.AKT_activation_pIGF1R]*	(x[C.IGF1R_basal_activation]*	x[C.init_IGF1R]**2/x[C.pIGF1R_internalize])	+	x[C.AKT_activation_pMetEGFR]*	(x[C.Met_EGFR_basal_act]*	x[C.init_EGFR]*	x[C.init_Met]/x[C.pMetEGFR_internalize])	+	x[C.AKT_activation_pMetErbB3]* (x[C.Met_ErbB3_basal_act]*	x[C.init_ErbB3]*	x[C.init_Met]/x[C.pMetErbB3_internalize])	+	x[C.AKT_activation_pMetd]*	(x[C.Met_basal_act]*	x[C.init_Met]**2/x[C.pMet_internalize]))/(x[C.pAKT_deactivation]*(x[C.feedback_pERK_on_AKT]*	 x[C.init_pERK]	+	x[C.feedback_pS6K1]*	x[C.init_pS6K1]	+	1)))+x[C.feedback_pERK]* y[V.pERK])
+        v[87] = (y[V.MEK]* x[C.MEK_phosphorylation_pErbB12]* y[V.pErbB12])/(1+x[C.feedback_pAKT]* (x[C.init_AKT]*	(x[C.AKT_activation_pEGFR]*	(x[C.EGFR_basal_activation]*	x[C.init_EGFR]**2/x[C.pEGFR_internalize])+ x[C.AKT_activation_pErbB12]*	(x[C.EGFR_ErbB2_basal_act]*	x[C.init_EGFR]*	x[C.init_ErbB2]/x[C.pErbB12_internalize])+ x[C.AKT_activation_pErbB13]*	(x[C.EGFR_ErbB3_basal_act]*	x[C.init_EGFR]*	x[C.init_ErbB3]/x[C.pErbB13_internalize])	+	x[C.AKT_activation_pErbB32]* (x[C.ErbB3_ErbB2_basal_act]*	x[C.init_ErbB2]*	x[C.init_ErbB3]/x[C.pErbB32_internalize])	+	x[C.AKT_activation_pIGF1R]*	x[C.AKT_internIGF1R_effect]*	(x[C.IGF1R_basal_activation]*	x[C.init_IGF1R]**2/(x[C.init_RTKph]*	x[C.pIGF1Ri_phosphatase]	+	x[C.pIGF1R_degradation]))	+	x[C.AKT_activation_pIGF1R]*	(x[C.IGF1R_basal_activation]*	x[C.init_IGF1R]**2/x[C.pIGF1R_internalize])		+	x[C.AKT_activation_pMetEGFR]*	(x[C.Met_EGFR_basal_act]*	x[C.init_EGFR]*	x[C.init_Met]/x[C.pMetEGFR_internalize])	+	x[C.AKT_activation_pMetErbB3]* (x[C.Met_ErbB3_basal_act]*	x[C.init_ErbB3]*	x[C.init_Met]/x[C.pMetErbB3_internalize])	+	x[C.AKT_activation_pMetd]*	(x[C.Met_basal_act]*	x[C.init_Met]**2/x[C.pMet_internalize]))/(x[C.pAKT_deactivation]*(x[C.feedback_pERK_on_AKT]*	 x[C.init_pERK]	+	x[C.feedback_pS6K1]*	x[C.init_pS6K1]	+	1)))+x[C.feedback_pERK]* y[V.pERK])
+        v[88] = (y[V.MEK]* x[C.MEK_phosphorylation_pErbB13]* y[V.pErbB13])/(1+x[C.feedback_pAKT]* (x[C.init_AKT]*	(x[C.AKT_activation_pEGFR]*	(x[C.EGFR_basal_activation]*	x[C.init_EGFR]**2/x[C.pEGFR_internalize])+ x[C.AKT_activation_pErbB12]*	(x[C.EGFR_ErbB2_basal_act]*	x[C.init_EGFR]*	x[C.init_ErbB2]/x[C.pErbB12_internalize])+ x[C.AKT_activation_pErbB13]*	(x[C.EGFR_ErbB3_basal_act]*	x[C.init_EGFR]*	x[C.init_ErbB3]/x[C.pErbB13_internalize])	+	x[C.AKT_activation_pErbB32]* (x[C.ErbB3_ErbB2_basal_act]*	x[C.init_ErbB2]*	x[C.init_ErbB3]/x[C.pErbB32_internalize])	+	x[C.AKT_activation_pIGF1R]*	x[C.AKT_internIGF1R_effect]*	(x[C.IGF1R_basal_activation]*	x[C.init_IGF1R]**2/(x[C.init_RTKph]*	x[C.pIGF1Ri_phosphatase]	+	x[C.pIGF1R_degradation]))	+	x[C.AKT_activation_pIGF1R]*	(x[C.IGF1R_basal_activation]*	x[C.init_IGF1R]**2/x[C.pIGF1R_internalize])		+	x[C.AKT_activation_pMetEGFR]*	(x[C.Met_EGFR_basal_act]*	x[C.init_EGFR]*	x[C.init_Met]/x[C.pMetEGFR_internalize])	+	x[C.AKT_activation_pMetErbB3]* (x[C.Met_ErbB3_basal_act]*	x[C.init_ErbB3]*	x[C.init_Met]/x[C.pMetErbB3_internalize])	+	x[C.AKT_activation_pMetd]*	(x[C.Met_basal_act]*	x[C.init_Met]**2/x[C.pMet_internalize]))/(x[C.pAKT_deactivation]*(x[C.feedback_pERK_on_AKT]*	 x[C.init_pERK]	+	x[C.feedback_pS6K1]*	x[C.init_pS6K1]	+	1)))+x[C.feedback_pERK]* y[V.pERK])
+        v[89] = (y[V.MEK]* x[C.MEK_phosphorylation_pErbB32]* y[V.pErbB32])/(1+x[C.feedback_pAKT]* (x[C.init_AKT]*	(x[C.AKT_activation_pEGFR]*	(x[C.EGFR_basal_activation]*	x[C.init_EGFR]**2/x[C.pEGFR_internalize])+ x[C.AKT_activation_pErbB12]*	(x[C.EGFR_ErbB2_basal_act]*	x[C.init_EGFR]*	x[C.init_ErbB2]/x[C.pErbB12_internalize])+ x[C.AKT_activation_pErbB13]*	(x[C.EGFR_ErbB3_basal_act]*	x[C.init_EGFR]*	x[C.init_ErbB3]/x[C.pErbB13_internalize])	+	x[C.AKT_activation_pErbB32]* (x[C.ErbB3_ErbB2_basal_act]*	x[C.init_ErbB2]*	x[C.init_ErbB3]/x[C.pErbB32_internalize])	+	x[C.AKT_activation_pIGF1R]*	x[C.AKT_internIGF1R_effect]*	(x[C.IGF1R_basal_activation]*	x[C.init_IGF1R]**2/(x[C.init_RTKph]*	x[C.pIGF1Ri_phosphatase]	+	x[C.pIGF1R_degradation]))	+	x[C.AKT_activation_pIGF1R]*	(x[C.IGF1R_basal_activation]*	x[C.init_IGF1R]**2/x[C.pIGF1R_internalize])		+	x[C.AKT_activation_pMetEGFR]*	(x[C.Met_EGFR_basal_act]*	x[C.init_EGFR]*	x[C.init_Met]/x[C.pMetEGFR_internalize])	+	x[C.AKT_activation_pMetErbB3]* (x[C.Met_ErbB3_basal_act]*	x[C.init_ErbB3]*	x[C.init_Met]/x[C.pMetErbB3_internalize])	+	x[C.AKT_activation_pMetd]*	(x[C.Met_basal_act]*	x[C.init_Met]**2/x[C.pMet_internalize]))/(x[C.pAKT_deactivation]*(x[C.feedback_pERK_on_AKT]*	 x[C.init_pERK]	+	x[C.feedback_pS6K1]*	x[C.init_pS6K1]	+	1)))+x[C.feedback_pERK]* y[V.pERK])
+        v[90] = (y[V.MEK]* x[C.MEK_phosphorylation_pMetd]* y[V.pMetd])/(1+x[C.feedback_pAKT]* (x[C.init_AKT]*	(x[C.AKT_activation_pEGFR]*	(x[C.EGFR_basal_activation]*	x[C.init_EGFR]**2/x[C.pEGFR_internalize])+ x[C.AKT_activation_pErbB12]*	(x[C.EGFR_ErbB2_basal_act]*	x[C.init_EGFR]*	x[C.init_ErbB2]/x[C.pErbB12_internalize])+ x[C.AKT_activation_pErbB13]*	(x[C.EGFR_ErbB3_basal_act]*	x[C.init_EGFR]*	x[C.init_ErbB3]/x[C.pErbB13_internalize])	+	x[C.AKT_activation_pErbB32]* (x[C.ErbB3_ErbB2_basal_act]*	x[C.init_ErbB2]*	x[C.init_ErbB3]/x[C.pErbB32_internalize])	+	x[C.AKT_activation_pIGF1R]*	x[C.AKT_internIGF1R_effect]*	(x[C.IGF1R_basal_activation]*	x[C.init_IGF1R]**2/(x[C.init_RTKph]*	x[C.pIGF1Ri_phosphatase]	+	x[C.pIGF1R_degradation]))	+	x[C.AKT_activation_pIGF1R]*	(x[C.IGF1R_basal_activation]*	x[C.init_IGF1R]**2/x[C.pIGF1R_internalize])		+	x[C.AKT_activation_pMetEGFR]*	(x[C.Met_EGFR_basal_act]*	x[C.init_EGFR]*	x[C.init_Met]/x[C.pMetEGFR_internalize])	+	x[C.AKT_activation_pMetErbB3]* (x[C.Met_ErbB3_basal_act]*	x[C.init_ErbB3]*	x[C.init_Met]/x[C.pMetErbB3_internalize])	+	x[C.AKT_activation_pMetd]*	(x[C.Met_basal_act]*	x[C.init_Met]**2/x[C.pMet_internalize]))/(x[C.pAKT_deactivation]*(x[C.feedback_pERK_on_AKT]*	 x[C.init_pERK]	+	x[C.feedback_pS6K1]*	x[C.init_pS6K1]	+	1)))+x[C.feedback_pERK]* y[V.pERK])
+        v[91] = (y[V.MEK]* x[C.MEK_phosphorylation_pMetEGFR]* y[V.pMetEGFR])/(1+x[C.feedback_pAKT]* (x[C.init_AKT]*	(x[C.AKT_activation_pEGFR]*	(x[C.EGFR_basal_activation]*	x[C.init_EGFR]**2/x[C.pEGFR_internalize])+ x[C.AKT_activation_pErbB12]*	(x[C.EGFR_ErbB2_basal_act]*	x[C.init_EGFR]*	x[C.init_ErbB2]/x[C.pErbB12_internalize])+ x[C.AKT_activation_pErbB13]*	(x[C.EGFR_ErbB3_basal_act]*	x[C.init_EGFR]*	x[C.init_ErbB3]/x[C.pErbB13_internalize])	+	x[C.AKT_activation_pErbB32]* (x[C.ErbB3_ErbB2_basal_act]*	x[C.init_ErbB2]*	x[C.init_ErbB3]/x[C.pErbB32_internalize])	+	x[C.AKT_activation_pIGF1R]*	x[C.AKT_internIGF1R_effect]*	(x[C.IGF1R_basal_activation]*	x[C.init_IGF1R]**2/(x[C.init_RTKph]*	x[C.pIGF1Ri_phosphatase]	+	x[C.pIGF1R_degradation]))	+	x[C.AKT_activation_pIGF1R]*	(x[C.IGF1R_basal_activation]*	x[C.init_IGF1R]**2/x[C.pIGF1R_internalize])		+	x[C.AKT_activation_pMetEGFR]*	(x[C.Met_EGFR_basal_act]*	x[C.init_EGFR]*	x[C.init_Met]/x[C.pMetEGFR_internalize])	+	x[C.AKT_activation_pMetErbB3]* (x[C.Met_ErbB3_basal_act]*	x[C.init_ErbB3]*	x[C.init_Met]/x[C.pMetErbB3_internalize])	+	x[C.AKT_activation_pMetd]*	(x[C.Met_basal_act]*	x[C.init_Met]**2/x[C.pMet_internalize]))/(x[C.pAKT_deactivation]*(x[C.feedback_pERK_on_AKT]*	 x[C.init_pERK]	+	x[C.feedback_pS6K1]*	x[C.init_pS6K1]	+	1)))+x[C.feedback_pERK]* y[V.pERK])
+        v[92] = (y[V.MEK]* x[C.MEK_phosphorylation_pIGF1R]* y[V.pIGF1Rd])/(1+x[C.feedback_pAKT]* (x[C.init_AKT]*	(x[C.AKT_activation_pEGFR]*	(x[C.EGFR_basal_activation]*	x[C.init_EGFR]**2/x[C.pEGFR_internalize])+ x[C.AKT_activation_pErbB12]*	(x[C.EGFR_ErbB2_basal_act]*	x[C.init_EGFR]*	x[C.init_ErbB2]/x[C.pErbB12_internalize])+ x[C.AKT_activation_pErbB13]*	(x[C.EGFR_ErbB3_basal_act]*	x[C.init_EGFR]*	x[C.init_ErbB3]/x[C.pErbB13_internalize])	+	x[C.AKT_activation_pErbB32]* (x[C.ErbB3_ErbB2_basal_act]*	x[C.init_ErbB2]*	x[C.init_ErbB3]/x[C.pErbB32_internalize])	+	x[C.AKT_activation_pIGF1R]*	x[C.AKT_internIGF1R_effect]*	(x[C.IGF1R_basal_activation]*	x[C.init_IGF1R]**2/(x[C.init_RTKph]*	x[C.pIGF1Ri_phosphatase]	+	x[C.pIGF1R_degradation]))	+	x[C.AKT_activation_pIGF1R]*	(x[C.IGF1R_basal_activation]*	x[C.init_IGF1R]**2/x[C.pIGF1R_internalize])		+	x[C.AKT_activation_pMetEGFR]*	(x[C.Met_EGFR_basal_act]*	x[C.init_EGFR]*	x[C.init_Met]/x[C.pMetEGFR_internalize])	+	x[C.AKT_activation_pMetErbB3]* (x[C.Met_ErbB3_basal_act]*	x[C.init_ErbB3]*x[C.init_Met]/x[C.pMetErbB3_internalize])	+	x[C.AKT_activation_pMetd]*	(x[C.Met_basal_act]*	x[C.init_Met]**2/x[C.pMet_internalize]))/(x[C.pAKT_deactivation]*(x[C.feedback_pERK_on_AKT]*	 x[C.init_pERK]	+	x[C.feedback_pS6K1]*	x[C.init_pS6K1]	+	1)))+x[C.feedback_pERK]* y[V.pERK])
+        v[93] = (y[V.MEK]* x[C.MEK_phosphorylation_pMetErbB3]* y[V.pMetErbB3])/(1+x[C.feedback_pAKT]* (x[C.init_AKT]*	(x[C.AKT_activation_pEGFR]*	(x[C.EGFR_basal_activation]*	x[C.init_EGFR]**2/x[C.pEGFR_internalize])+ x[C.AKT_activation_pErbB12]*	(x[C.EGFR_ErbB2_basal_act]*	x[C.init_EGFR]*	x[C.init_ErbB2]/x[C.pErbB12_internalize])+ x[C.AKT_activation_pErbB13]*	(x[C.EGFR_ErbB3_basal_act]*	x[C.init_EGFR]*	x[C.init_ErbB3]/x[C.pErbB13_internalize])	+	x[C.AKT_activation_pErbB32]* (x[C.ErbB3_ErbB2_basal_act]*	x[C.init_ErbB2]*	x[C.init_ErbB3]/x[C.pErbB32_internalize])	+	x[C.AKT_activation_pIGF1R]*	x[C.AKT_internIGF1R_effect]*	(x[C.IGF1R_basal_activation]*	x[C.init_IGF1R]**2/(x[C.init_RTKph]*	x[C.pIGF1Ri_phosphatase]	+	x[C.pIGF1R_degradation]))	+	x[C.AKT_activation_pIGF1R]*	(x[C.IGF1R_basal_activation]*	x[C.init_IGF1R]**2/x[C.pIGF1R_internalize])		+	x[C.AKT_activation_pMetEGFR]*	(x[C.Met_EGFR_basal_act]*	x[C.init_EGFR]*	x[C.init_Met]/x[C.pMetEGFR_internalize])	+	x[C.AKT_activation_pMetErbB3]* (x[C.Met_ErbB3_basal_act]*	x[C.init_ErbB3]*	x[C.init_Met]/x[C.pMetErbB3_internalize])	+	x[C.AKT_activation_pMetd]*	(x[C.Met_basal_act]*	x[C.init_Met]**2/x[C.pMet_internalize]))/(x[C.pAKT_deactivation]*(x[C.feedback_pERK_on_AKT]*	 x[C.init_pERK]	+	x[C.feedback_pS6K1]*	x[C.init_pS6K1]	+	1)))+x[C.feedback_pERK]* y[V.pERK])
+        v[94] = (y[V.MEK]* x[C.MEK_internIGF1R_effect]* x[C.MEK_phosphorylation_pIGF1R]* y[V.pIGF1Ri])/(1+x[C.feedback_pAKT]* (x[C.init_AKT]*	(x[C.AKT_activation_pEGFR]*	(x[C.EGFR_basal_activation]*	x[C.init_EGFR]**2/x[C.pEGFR_internalize])+ x[C.AKT_activation_pErbB12]*	(x[C.EGFR_ErbB2_basal_act]*	x[C.init_EGFR]*	x[C.init_ErbB2]/x[C.pErbB12_internalize])+ x[C.AKT_activation_pErbB13]*	(x[C.EGFR_ErbB3_basal_act]*	x[C.init_EGFR]*	x[C.init_ErbB3]/x[C.pErbB13_internalize])	+	x[C.AKT_activation_pErbB32]* (x[C.ErbB3_ErbB2_basal_act]*	x[C.init_ErbB2]*	x[C.init_ErbB3]/x[C.pErbB32_internalize])	+	x[C.AKT_activation_pIGF1R]*	x[C.AKT_internIGF1R_effect]*	(x[C.IGF1R_basal_activation]*	x[C.init_IGF1R]**2/(x[C.init_RTKph]*	x[C.pIGF1Ri_phosphatase]	+	x[C.pIGF1R_degradation]))	+	x[C.AKT_activation_pIGF1R]*	(x[C.IGF1R_basal_activation]*	x[C.init_IGF1R]**2/x[C.pIGF1R_internalize])		+	x[C.AKT_activation_pMetEGFR]*	(x[C.Met_EGFR_basal_act]*	x[C.init_EGFR]*	x[C.init_Met]/x[C.pMetEGFR_internalize])	+	x[C.AKT_activation_pMetErbB3]* (x[C.Met_ErbB3_basal_act]*	x[C.init_ErbB3]*	x[C.init_Met]/x[C.pMetErbB3_internalize])	+	x[C.AKT_activation_pMetd]*	(x[C.Met_basal_act]*	x[C.init_Met]**2/x[C.pMet_internalize]))/(x[C.pAKT_deactivation]*(x[C.feedback_pERK_on_AKT]*	 x[C.init_pERK]	+	x[C.feedback_pS6K1]*	x[C.init_pS6K1]	+	1)))+x[C.feedback_pERK]* y[V.pERK])
         v[95] = y[V.pMEK]* x[C.pMEK_dephosphorylation]
 
         v[96] = y[V.ERK]* x[C.ERK_phosphorylation_pMEK]* y[V.pMEK]
@@ -596,9 +602,92 @@ def param_values():
 
 def initial_values():
     y0 = [0]*V.NUM
+    
+    y0[V.dose_EGF] = 0.0
+    y0[V.dose_HGF] = 0.0
+    y0[V.RTKph] = 6.19*10**(-1) 
+    y0[V.dose_IGF1] = 0.0
+    y0[V.dose_HRG] = 0.0
+    y0[V.dose_BTC] = 0.0
+    y0[V.EGFR] = 1.79*10**(1) 
+    y0[V.EGFR_EGF] = 0.00*10**(0) 
+    y0[V.EGFR_BTC] = 0.00*10**(0)
+    
+    '''
+    y0[V.pEGFRd] = 
+    y0[V.pEGFRi] = 
+    y0[V.pEGFRi_ph] = 
+    y0[V.EGFRi] = 
+    '''
+    y0[V.ErbB2] = 5.70*10**(0)
+    
+    '''
+    y0[V.pErbB2] = 
+    y0[V.pErbB2i] = 
+    y0[V.ErbB2i] = 
+    y0[V.pErbB2i_ph] =  
+    y0[V.pErbB12] = 
+    y0[V.pErbB12i] = 
+    y0[V.pErbB12i_ph] = 
+    '''
+    y0[V.ErbB3] = 2.48*10**(0) 
+    y0[V.ErbB3_HRG] = 0.00*10**(0) 
+    
+    '''
+    y0[V.pErbB3d] = 
+    y0[V.pErbB3i] =  
+    y0[V.pErbB3i_ph] =  
+    #y0[V.ErbB3i] = 
+    y0[V.pErbB13] = 
+    y0[V.pErbB13i] = 
+    y0[V.pErbB13i_ph] = 
+    y0[V.pErbB32] = 
+    y0[V.pErbB32i] = 
+    y0[V.pErbB32i_ph] = 
+    '''
+    y0[V.IGF1R] = 4.73*10**(0)
+    y0[V.IGF1R_IGF1] = 0.00*10**(0)
+    '''
+    y0[V.pIGF1Rd] = 
+    y0[V.pIGF1Ri] = 
+    y0[V.pIGF1Ri_ph] = 
+    y0[V.IGF1Ri] = 5
+    '''
+    y0[V.Met] = 7.90*10**(0)
+    y0[V.Met_HGF] = 0.00*10**(0) 
+    '''
+    y0[V.pMetd] = 
+    y0[V.pMeti] = 
+    y0[V.pMeti_ph] = 
+    y0[V.Meti] = 
+    y0[V.pMetErbB3] = 
+    y0[V.pMetErbB3i] = 
+    y0[V.pMetErbB3i_ph] = 
+    y0[V.pMetEGFR] = 
+    y0[V.pMetEGFRi] = 
+    y0[V.pMetEGFRi_ph] = 
+    '''
+    y0[V.MEK] = 4.24*10**(0) 
+    '''
+    y0[V.pMEK] = 
+    y0[V.ERK] = 
+    '''
 
+    y0[V.pERK] = 3.34*10**(-1)
+    '''
+    y0[V.AKT] = 
+    y0[V.pAKT] = 
+    y0[V.S6K1] = 
+    '''
+    y0[V.pS6K1] = 1.24*10**(-3) 
+    y0[V.S6] = 1.46*10**(2)
+ 
+    y0[V.pS6] = 0.0171533722671392 #
 
+    
     return y0
+
+    
 ''''
 # call class
 if __name__ == '__main__':
