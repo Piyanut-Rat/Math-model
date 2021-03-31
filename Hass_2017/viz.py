@@ -53,7 +53,7 @@ class Visualization(object):
     def get_timecourse_options(self):
         for i, _ in enumerate(observables):
 
-            self.timecourse_options[i]["xlim"] = (-10, 400)
+            self.timecourse_options[i]["xlim"] = (-10, 500)
             self.timecourse_options[i]["xticks"] = [50 * i for i in range(5)]
             self.timecourse_options[i]["xlabel"] = "Time (min)"
 
@@ -66,11 +66,11 @@ class Visualization(object):
     @staticmethod
     def set_timecourse_rcParams():
         """figure/simulation"""
-        plt.rcParams["font.size"] = 12
+        plt.rcParams["font.size"] = 8
         plt.rcParams["axes.linewidth"] = 1.5
         plt.rcParams["xtick.major.width"] = 1.5
         plt.rcParams["ytick.major.width"] = 1.5
-        plt.rcParams["lines.linewidth"] = 1.8
+        plt.rcParams["lines.linewidth"] = 1
         plt.rcParams["lines.markersize"] = 8
 
         plt.rcParams['font.family'] = 'Arial'
