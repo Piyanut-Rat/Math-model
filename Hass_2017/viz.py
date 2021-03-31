@@ -44,8 +44,7 @@ class Visualization(object):
 
         self.sensitivity_options = {
             "figsize": (12, 5),
-            #"graph_color": ['k','b','c','r','y'],
-            #"graph_labelname": ['control, 0 nM', '0.156 nM', '0.625 nM', '2.5 nM', '10.0 nM'],
+
             "width": 0.3,
             "legend_loc": "upper left",
             "cmap": [self.cm.colors[j] for j in range(10)],
