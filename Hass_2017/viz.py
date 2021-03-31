@@ -30,7 +30,7 @@ class Visualization(object):
         self.multiplot_options = {
             "fig_name": "multiplot_observables",
             "observables": [],
-            "condition": [],
+            "condition": None,
             "xlim": (),
 
             "xticks": None,
