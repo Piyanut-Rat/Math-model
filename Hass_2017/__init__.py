@@ -1,13 +1,17 @@
 import os
+import sys
+sys.path.append("fitness")
+from fitness import objective
+
 from typing import List
 
-from .fitness import objective
-from .name2idx import C, V
-from .observable import ExperimentalData, NumericalSimulation, observables
-from .reaction_network import ReactionNetwork
-from .set_model import initial_values, param_values
-from .set_search_param import SearchParam
-from .viz import Visualization
+from name2idx import parameters as C
+from name2idx import species as V
+from observable import  ExperimentalData, NumericalSimulation, observables
+from reaction_network import ReactionNetwork
+from set_model import initial_values, param_values
+from set_search_param import SearchParam
+from viz import Visualization
 
 
 def _check_duplicate(names: List[str], object: str) -> List[str]:
