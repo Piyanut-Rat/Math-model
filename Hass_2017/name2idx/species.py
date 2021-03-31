@@ -5,7 +5,7 @@ NAMES = [
     'dose_IGF1',
     'dose_HRG',
     'dose_BTC',
-    'EGER',
+    'EGFR',
     'EGFR_EGF',
     'EGFR_BTC',
     'pEGFRd',
@@ -69,7 +69,7 @@ NAMES = [
     'S6',
     'pS6',
 
-    'EGFR',
+    
     'EGFR_ErbB3_dimerize_noHRG',
     'pErbB3i',
     'pMetEGFRi_ph',
