@@ -19,8 +19,7 @@ class DifferentialEquation(object):
         #v[4] = x[C.IGF1R_prod]
         v[4] = 2* (x[C.IGF1R_basal_activation]*	x[C.init_IGF1R]**2/(x[C.init_RTKph]*x[C.pIGF1Ri_phosphatase]+x[C.pIGF1R_degradation]))* x[C.pIGF1R_degradation]
         #v[5] = x[C.Met_prod]
-        v[5] = (x[C.Met_EGFR_basal_act]*x[C.init_EGFR]*	x[C.init_Met]	/(x[C.init_RTKph]*	x[C.pMetEGFRi_phosphatase]
-        +x[C.pMetEGFR_degradation]))*x[C.pMetEGFR_degradation]+	(x[C.Met_ErbB3_basal_act]*	x[C.init_ErbB3]*	x[C.init_Met]/	(x[C.init_RTKph]*	x[C.pMetErbB3i_phosphatase]	+x[C.pMetErbB3_degradation]))* x[C.pMetErbB3_degradation]+ 2*(x[C.Met_basal_act]* x[C.init_Met]**2/(x[C.init_RTKph]*	x[C.pMeti_phosphatase]	+	x[C.pMet_degradation]))*x[C.pMet_degradation]
+        v[5] = (x[C.Met_EGFR_basal_act]*x[C.init_EGFR]*	x[C.init_Met]	/(x[C.init_RTKph]*	x[C.pMetEGFRi_phosphatase]+x[C.pMetEGFR_degradation]))*x[C.pMetEGFR_degradation]+	(x[C.Met_ErbB3_basal_act]*	x[C.init_ErbB3]*	x[C.init_Met]/	(x[C.init_RTKph]*	x[C.pMetErbB3i_phosphatase]	+x[C.pMetErbB3_degradation]))* x[C.pMetErbB3_degradation]+ 2*(x[C.Met_basal_act]* x[C.init_Met]**2/(x[C.init_RTKph]*	x[C.pMeti_phosphatase]	+	x[C.pMet_degradation]))*x[C.pMet_degradation]
 
         ## Ligand binding
         v[6] = y[V.EGFR]* x[C.EGFR_lig_binding]* y[V.dose_EGF]
@@ -307,8 +306,8 @@ def param_values():
     x[C.Met_recycle] = 5.42*10**(-1)
     x[C.S6K1_phosphorylation_pAKT] = 2.50*10**(-1)
     x[C.S6K1_phosphorylation_pERK] = 1.07*10**(-5)
-    x[C.S6_phosphorylation_pERK] = 1.00*10**(-5)
-    x[C.S6_phosphorylation_pS6K1] = 8.57*10**(-3)
+    x[C.S6_phosphorylation_pERK] = 1.00*10**(-5) #
+    x[C.S6_phosphorylation_pS6K1] = 8.57*10**(-3) #
     x[C.feedback_pAKT] = 1.06*10**(-5)
     x[C.feedback_pERK] = 1.00*10**(+3)
     x[C.feedback_pERK_on_AKT] = 1.00*10**(-5)
@@ -375,7 +374,7 @@ def param_values():
     x[C.pMeti_dephosph] = 1.30*10**(+1)
     x[C.pMeti_phosphatase] = 1.00*10**(+3)
     x[C.pS6K1_dephosphorylation] = 1.03*10**(-2)
-    x[C.pS6_dephosphorylation] = 1.19*10**(-1)
+    x[C.pS6_dephosphorylation] = 1.19*10**(-1) #
     x[C.relto_A431_init_EGFR] = 9.63*10**(+0)
     x[C.relto_A431_init_ErbB2] = 1.00*10**(+0)
     x[C.relto_A431_init_ErbB3] = 9.11*10**(-1)
@@ -406,7 +405,7 @@ def param_values():
     x[C.relto_init_ErbB3] = 1.04*10**(+0)
     x[C.relto_init_IGF1R] = 1.48*10**(+0)
     x[C.relto_init_Met] = 1.80*10**(+0)
-    x[C.scale_Ligand] = 3.78*10**(+4)   
+    x[C.scale_Ligand] = 3.78*10**(4)   
 
     #scale
     x[C.scale_pAKT_CelllineA431] = 7.83*10**(0)
@@ -605,85 +604,85 @@ def initial_values():
     
     y0[V.dose_EGF] = 0.0
     y0[V.dose_HGF] = 0.0
-    y0[V.RTKph] = 6.19*10**(-1) 
+    y0[V.RTKph] = 0.618911491797731 
     y0[V.dose_IGF1] = 0.0
     y0[V.dose_HRG] = 0.0
     y0[V.dose_BTC] = 0.0
-    y0[V.EGFR] = 1.79*10**(1) 
-    y0[V.EGFR_EGF] = 0.00*10**(0) 
-    y0[V.EGFR_BTC] = 0.00*10**(0)
+    y0[V.EGFR] = 17.8621933083143 
+    y0[V.EGFR_EGF] = 0.0
+    y0[V.EGFR_BTC] = 0.0
     
-    '''
-    y0[V.pEGFRd] = 
-    y0[V.pEGFRi] = 
-    y0[V.pEGFRi_ph] = 
-    y0[V.EGFRi] = 
-    '''
-    y0[V.ErbB2] = 5.70*10**(0)
     
-    '''
-    y0[V.pErbB2] = 
-    y0[V.pErbB2i] = 
-    y0[V.ErbB2i] = 
-    y0[V.pErbB2i_ph] =  
-    y0[V.pErbB12] = 
-    y0[V.pErbB12i] = 
-    y0[V.pErbB12i_ph] = 
-    '''
-    y0[V.ErbB3] = 2.48*10**(0) 
-    y0[V.ErbB3_HRG] = 0.00*10**(0) 
+    y0[V.pEGFRd] = 5.12011130278668E-4
+    y0[V.pEGFRi] = 2.79223720669219E-5
+    y0[V.pEGFRi_ph] = 1.4687856601509E-4
+    y0[V.EGFRi] = 1.37508187561569E-8 
     
-    '''
-    y0[V.pErbB3d] = 
-    y0[V.pErbB3i] =  
-    y0[V.pErbB3i_ph] =  
-    #y0[V.ErbB3i] = 
-    y0[V.pErbB13] = 
-    y0[V.pErbB13i] = 
-    y0[V.pErbB13i_ph] = 
-    y0[V.pErbB32] = 
-    y0[V.pErbB32i] = 
-    y0[V.pErbB32i_ph] = 
-    '''
-    y0[V.IGF1R] = 4.73*10**(0)
-    y0[V.IGF1R_IGF1] = 0.00*10**(0)
-    '''
-    y0[V.pIGF1Rd] = 
-    y0[V.pIGF1Ri] = 
-    y0[V.pIGF1Ri_ph] = 
-    y0[V.IGF1Ri] = 5
-    '''
-    y0[V.Met] = 7.90*10**(0)
-    y0[V.Met_HGF] = 0.00*10**(0) 
-    '''
-    y0[V.pMetd] = 
-    y0[V.pMeti] = 
-    y0[V.pMeti_ph] = 
-    y0[V.Meti] = 
-    y0[V.pMetErbB3] = 
-    y0[V.pMetErbB3i] = 
-    y0[V.pMetErbB3i_ph] = 
-    y0[V.pMetEGFR] = 
-    y0[V.pMetEGFRi] = 
-    y0[V.pMetEGFRi_ph] = 
-    '''
-    y0[V.MEK] = 4.24*10**(0) 
-    '''
-    y0[V.pMEK] = 
-    y0[V.ERK] = 
-    '''
+    y0[V.ErbB2] = 5.70185166249099
+    
+    
+    y0[V.pErbB2] = 2.20826262632109E-4 
+    y0[V.pErbB2i] = 2.35511421879916E-4
+    y0[V.ErbB2i] = 44.4835113645705
+    y0[V.pErbB2i_ph] = 0.0176807431775487 
+    y0[V.pErbB12] = 5.37306859494303E-4 
+    y0[V.pErbB12i] = 0.00144471037537624
+    y0[V.pErbB12i_ph] = 7.55785246775258E-7
+    
+    y0[V.ErbB3] = 2.47992342696256
+    y0[V.ErbB3_HRG] = 0.0
+    
+    
+    y0[V.pErbB3d] = 1.8018926279905E-4
+    y0[V.pErbB3i] =  0.00348026782363202
+    y0[V.pErbB3i_ph] =  0.0108514486150842
+    y0[V.ErbB3i] = 34.3224209878038
+    y0[V.pErbB13] = 3.32712466211581E-5
+    y0[V.pErbB13i] = 6.69142208681604E-4
+    y0[V.pErbB13i_ph] = 1.13074197411592E-10
+    y0[V.pErbB32] = 1.30059969850016E-4
+    y0[V.pErbB32i] = 2.34208535412277E-4
+    y0[V.pErbB32i_ph] = 5.93238579976826E-4
+    
+    y0[V.IGF1R] = 4.73494621402554
+    y0[V.IGF1R_IGF1] = 0.0
+    
+    y0[V.pIGF1Rd] = 2.6239258403409E-5
+    y0[V.pIGF1Ri] = 4.2395816408642E-5
+    y0[V.pIGF1Ri_ph] = 7.91085256809129E-5
+    y0[V.IGF1Ri] = 5.24785159589016E-5
+    
+    y0[V.Met] = 7.90290414461229
+    y0[V.Met_HGF] = 0.0
+  
+    y0[V.pMetd] = 6.24560598662565E-7
+    y0[V.pMeti] = 1.0060257690714E-6
+    y0[V.pMeti_ph] = 4.79508059771836E-5
+    y0[V.Meti] = 45.960014100956
+    y0[V.pMetErbB3] = 0.0645520569171923
+    y0[V.pMetErbB3i] = 0.0402793824584546
+    y0[V.pMetErbB3i_ph] = 0.0249293726860515
+    y0[V.pMetEGFR] = 0.00185677841647765 
+    y0[V.pMetEGFRi] = 0.00172863499055847
+    y0[V.pMetEGFRi_ph] = 7.58806259570584E-8
+   
+    y0[V.MEK] = 4.2412663925898 
+    
+    y0[V.pMEK] = 1.014543757693E-4
+    y0[V.ERK] = 6922167.20947519
+   
 
-    y0[V.pERK] = 3.34*10**(-1)
-    '''
-    y0[V.AKT] = 
-    y0[V.pAKT] = 
-    y0[V.S6K1] = 
-    '''
-    y0[V.pS6K1] = 1.24*10**(-3) 
-    y0[V.S6] = 1.46*10**(2)
-    '''
-    y0[V.pS6] = 
-    '''
+    y0[V.pERK] = 0.334274838149849 #
+    
+    y0[V.AKT] = 2.70857345464684
+    y0[V.pAKT] = 0.0263677143207646
+    y0[V.S6K1] = 0.00194894402116983
+    
+    y0[V.pS6K1] = 0.00124327830478657 #
+    y0[V.S6] = 145.50079875804 #
+    
+    y0[V.pS6] = 0.0171533722671392 #
+    
     
     return y0
 
