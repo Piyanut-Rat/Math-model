@@ -4,7 +4,7 @@ import sys
 import numpy as np
 from scipy.spatial.distance import cosine
 
-from observable import observables, NumericalSimulation
+from observable import observables, NumericalSimulation, ExperimentalData
 from set_search_param import SearchParam
 
 
@@ -45,7 +45,7 @@ def objective(indiv_gene, *args):
 
     sim = NumericalSimulation()
     
-    #exp = ExperimentalData()
+    exp = ExperimentalData()
 
     exp.set_data()
 
