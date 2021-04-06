@@ -36,7 +36,7 @@ class Visualization(object):
             "xticks": None,
             "xlabel": "Time",
             "ylim": (),
-            "yticks": None,
+            "yticks": True, ##
             "ylabel": "",
             "cmap": [self.cm.colors[j] for j in range(10)],
             "shape": Line2D.filled_markers,
