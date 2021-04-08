@@ -1,6 +1,7 @@
 import numpy as np
 
-from biomass.dynamics.solver import get_steady_state, solve_ode
+from biomasss.dynamics.solver import get_steady_state, solve_ode
+#from biomass import get_steady_state, solve_ode
 from scipy.integrate import ode
 from scipy.integrate import odeint, solve_ivp
 
@@ -42,8 +43,8 @@ class NumericalSimulation(DifferentialEquation):
         super().__init__(pertubation = {})
         self.normalization = {}
 
-        for observable in observables:
-            self.normalization[observable] = {'timepoint': None, 'condition': []}
+        #for observable in observables:
+        #    self.normalization[observable] = {'timepoint': None, 'condition': []}
 
     t = range(240) # unit; min.
 
