@@ -1,6 +1,6 @@
 import numpy as np
 
-from biomass.estimation import convert_scale, initialize_search_param
+from biomasss.estimation import convert_scale, initialize_search_param
 
 from name2idx import parameters as C
 from name2idx import species as V
@@ -158,7 +158,7 @@ class SearchParam(object):
 
     
         ## log10(100000) = 5; non-log of 5 is 100000 (1e+5) 
-
+        
         search_rgn[:, C.AKT_activation_pEGFR] = [1e-5, 1e+3]
         search_rgn[:, C.AKT_activation_pErbB12] = [1e-5, 1e+3]
         search_rgn[:, C.AKT_activation_pErbB13] = [1e-5, 1e+3]
@@ -361,7 +361,7 @@ class SearchParam(object):
 
         search_rgn[:, C.scale_pS6K1_CelllineH322M] = [1e-4, 1e+6]
         search_rgn[:, C.scale_pS6_CelllineH322M] = [1e-4, 1e+6]
-
+        
 
         search_rgn = convert_scale(
             region = search_rgn,
