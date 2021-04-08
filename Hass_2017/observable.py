@@ -1,7 +1,7 @@
 import numpy as np
 
 from biomasss.dynamics.solver import get_steady_state, solve_ode
-#from biomass import get_steady_state, solve_ode
+
 from scipy.integrate import ode
 from scipy.integrate import odeint, solve_ivp
 
@@ -45,42 +45,55 @@ class NumericalSimulation(DifferentialEquation):
 
         #for observable in observables:
         #    self.normalization[observable] = {'timepoint': None, 'condition': []}
-
-    t = range(240) # unit; min.
-
-    #x = param_values()
-    #y0 = initial_values()
-   
-
-    # experimental conditions
-    conditions = ['control','0.156','0.625', '2.500', '10.000']
+    '''
+    conditions = ['control; 0 nM','0.156 nM','0.625 nM', '2.5 nM', '10 nM']
 
     simulations = np.empty((len(observables), len(t), len(conditions)))
     x = param_values()
-    y0 = initial_values()
-    
+    y0 = initial_values()    
+
+    def simulate(self, x, y0, _perturbation = {}):
+        self.pertubation = _perturbation
+
+        #get steady state
+        #x[C.Ligand] = x[C.no_ligand] # No ligand binding        
+        # add ligand        
+        for i, condition in enumerate(self.conditions):
+            
+            if condition == 'control; 0 nM':
+                y0[V.dose_EGF] = 0*x[C.scale_Ligand]
+
+            elif condition == '0.156 nM':
+                y0[V.dose_EGF] = 0.156*x[C.scale_Ligand]
+
+            elif condition == '0.625 nM':
+                y0[V.dose_EGF] = 0.625*x[C.scale_Ligand]
+
+            elif condition == '2.5 nM':
+                y0[V.dose_EGF] = 2.5*x[C.scale_Ligand]
+
+            elif condition == '10 nM':
+                y0[V.dose_EGF] = 10*x[C.scale_Ligand]       
+    '''
+
+    t = range(240) # unit; min.
+    #x = param_values()
+    #y0 = initial_values()   
+
+    # experimental conditions
+    conditions = ['control; 0 nM','0.156 nM','0.625 nM', '2.500', '10.000']
+
+    simulations = np.empty((len(observables), len(t), len(conditions)))
+    x = param_values()
+    y0 = initial_values()   
 
     def simulate(self, x, y0, _perturbation = {}):
 
         self.pertubation = _perturbation
         #get steady state
         #x[C.Ligand] = x[C.no_ligand] # No ligand binding
-        #y0[V.dose_EGF] = 0
-        #y0[V.dose_HGF] = 0
-        #y0[V.dose_IGF1] = 0
-        #y0[V.dose_HRG] = 0
-        #y0 = get_steady_state(self.diffeq, y0, tuple(x))
-        #y0 = initial_values()
-        '''
-        sol = solve_ode(self.diffeq, y0, self.t, tuple(x))
-        if sol is None:
-            return False
-
-        else:
-            y0 = sol.y[:, -1].tolist()
-        '''
-        # add ligand
         
+        # add ligand        
         for i, condition in enumerate(self.conditions):
             
             if condition == 'control':
@@ -98,11 +111,7 @@ class NumericalSimulation(DifferentialEquation):
             elif condition == '10.000':
                 y0[V.dose_EGF] = 10*x[C.scale_Ligand]
 
-
-            
-            sol = solve_ode(self.diffeq, y0, self.t, tuple(x))
-
-            
+            sol = solve_ode(self.diffeq, y0, self.t, tuple(x))            
             
             if sol is None:
                 return False
@@ -171,9 +180,7 @@ class NumericalSimulation(DifferentialEquation):
                 
                 self.simulations[observables.index('pS6_au'), :, i] = np.log10(x[C.offset_pS6_CelllineH322M] + (x[C.scale_pS6_CelllineH322M]* sol.y[V.pS6, :])
                 )
-                
-
-                
+                               
 
 class ExperimentalData(object):
     """
